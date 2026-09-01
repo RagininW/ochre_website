@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ochre — a roguelite rts</title>
+<meta name="description" content="a society of agents grows, falls, and leaves its genes to the next one." />
+<link rel="icon" type="image/png" href="favicon.png">
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ochre" />
+<meta property="og:title" content="ochre — a roguelite rts" />
+<meta property="og:description" content="a society of agents grows, falls, and leaves its genes to the next one." />
+<meta property="og:url" content="https://ochre.thatuglyboy.com" />
+<meta name="theme-color" content="#d3c7a0" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ FACES ============
+     lingming and sable are the game's own display faces, copied from
+     agent_simulation/assets/fonts. lingming carries NO accented glyphs — á, ñ
+     and ¿ render as nothing, not as a fallback box — so Spanish display type is
+     set in sable instead (see [lang="es"] below).
+
+     The two faces do not put their baselines in the same place at the same
+     nominal size: measured at 40px, lingming has ascent 35 / descent 5 and
+     sable has ascent 27 / descent 13, with capitals of the same height. Forcing
+     one ascent/descent pair on both normalises the line box, and size-adjust
+     110% on sable matches the cap height — the same correction the game makes
+     in assets.py (`_DisplayFace`) and es/_meta.json (`display_scale: 1.1`). */
+  @font-face {
+    font-family: 'lingming';
+    src: url('fonts/lingming.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+    ascent-override: 88%; descent-override: 12%; line-gap-override: 0%;
+  }
+  @font-face {
+    font-family: 'sable';
+    src: url('fonts/sable.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+    size-adjust: 110%;
+    ascent-override: 88%; descent-override: 12%; line-gap-override: 0%;
+  }
+  @font-face {
+    font-family: 'avenir';
+    src: url('fonts/avenir.ttf') format('truetype');
+    font-weight: 400; font-style: normal; font-display: swap;
+    size-adjust: 100%; ascent-override: 85%; descent-override: 25%; line-gap-override: 0%;
+  }
+
+  /* ============ TOKENS ============
+     Taken off two plates in assets/ui/menus/, not eyeballed — these two ARE the
+     art direction, and media/tex_maroon.png and media/tex_bone.png are their
+     interiors with the black outline cropped off:
+
+       option_row.png        #3f2627  the maroon capsule
+       bloodline_banner.png  #c1bea7  the bone capsule
+       stat_card.png         #d2d1b3  bone, one step brighter
+       primary_start_run.png #d8d878  the chartreuse primary
+       pause_primary.png     #e8e0a0  its highlight
+
+     The page itself is bloodline_banner's parchment (media/tex_page.jpg, that
+     crop mirrored into a seamless tile). Everything else is a plate lying ON
+     that sheet: maroon cards, chartreuse and olive buttons, all outlined in
+     ink. Nothing on this page is the same colour as the paper — that is what
+     keeps the capsules readable. */
+  :root {
+    --font-display: 'lingming', 'sable', serif;
+    --font-body:    'avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    --ink:        #000000;
+    --paper:      #d3c7a0;   /* the page — bloodline_banner warmed toward ochre */
+    --capsule:    #4a2b2c;   /* maroon plate, a shade up from the raw plate so
+                                the watercolour in it still reads on paper */
+    --capsule-hi: #5c3839;
+    --bone:       #ecdfc4;   /* type on maroon */
+    --olive:      #c3bd94;   /* the recessed / not-yet plate */
+    --lime:       #d8d878;   /* primary_start_run */
+    --lime-hi:    #e8e0a0;   /* pause_primary */
+    --sienna:     #c9663a;   /* Lascaux sienna — the accent on the light page */
+    --oxide:      #9c3f2c;   /* Lascaux oxide — headings */
+    --amber:      #d99031;   /* Lascaux amber, warmed — chips and small marks */
+    --on-paper:   #33191a;   /* type on the page */
+    --muted:      #6b4038;   /* secondary type on the page */
+    --muted-bone: #c4a68c;   /* secondary type on maroon */
+
+    --tex-maroon: url('media/tex_maroon.png');
+    --tex-bone:   url('media/tex_bone.png');
+    --tex-page:   url('media/tex_page.jpg');
+
+    /* The plate: a hard ink offset for the drawn outline, plus a soft bloom
+       underneath so it reads as lying ON the ground rather than printed into
+       it. Both, always — the hard edge alone looked like a sticker. */
+    --lift:    5px 5px 0 var(--ink), 8px 11px 18px rgba(36,20,22,.30);
+    --lift-hi: 7px 7px 0 var(--ink), 12px 16px 26px rgba(36,20,22,.38);
+    --lift-sm: 3px 3px 0 var(--ink), 4px 6px 10px rgba(36,20,22,.28);
+
+    --gutter: 24px;
+    --max: 1180px;
+  }
+
+  /* Spanish display type. lingming has no accents at all, so the whole
+     display stack swaps rather than falling through glyph by glyph — a single
+     é picked up from the fallback face mid-word is visibly a different letter.
+     Scoped to any [lang="es"], not just <html>, because the community buttons
+     name each server in that server's own language regardless of the page's. */
+  [lang="es"] { --font-display: 'sable', serif; }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper) var(--tex-page) repeat;
+    background-size: 700px auto;
+    color: var(--on-paper);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: .001s !important; transition-duration: .001s !important; }
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; }
+  ::selection { background: var(--capsule); color: var(--bone); }
+  :focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+
+  /* One light grain over everything. An earlier build also carried a vignette,
+     which dimmed the corners the nav and footer live in — the page read as
+     unlit rather than atmospheric. */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    opacity: .10; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ============ THE PLATE ============
+     Every capsule on this page — button, card, screenshot frame — is the same
+     object: a painted plate with a heavy black outline and a shadow. The paint
+     is the game's own watercolour, not a flat fill. */
+  .btn, .sys, .shot {
+    border: 3px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: var(--lift);
+    background-color: var(--capsule);
+    background-image: var(--tex-maroon);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* ============ BUTTONS ============ */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 15px; font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: lowercase;
+    padding: 14px 24px;
+    color: var(--bone);
+    background-color: var(--capsule);
+    background-image: var(--tex-maroon);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform .1s, box-shadow .1s, background-color .12s;
+  }
+  .btn:hover {
+    background-color: var(--capsule-hi);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--lift-hi);
+  }
+  .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+  /* multiply keeps the bone plate's mottling visible through the chartreuse
+     instead of covering it with a flat fill */
+  .btn.primary {
+    color: var(--ink);
+    background-color: var(--lime);
+    background-image: var(--tex-bone);
+    background-blend-mode: multiply;
+  }
+  .btn.primary:hover { background-color: var(--lime-hi); }
+  .btn.big { font-size: 18px; padding: 18px 32px; }
+  .btn.sm {
+    font-size: 13px; padding: 9px 16px;
+    border-width: 2px; border-radius: 9px;
+    box-shadow: var(--lift-sm);
+  }
+  .btn.sm:hover { box-shadow: var(--lift); }
+
+  /* A link slot with no url yet. It keeps the bone plate, the texture and the
+     shadow — a button that cannot be pressed yet still looks like a button, and
+     while every link on this page is unfilled, dropping them all to the maroon
+     paint left the whole page one colour. What marks it is the `soon` chip and
+     the fact that it does not lift or press. */
+  .btn.dead {
+    color: #4a4230;
+    background-color: var(--olive);
+    background-image: var(--tex-bone);
+    background-blend-mode: normal;
+    cursor: default; pointer-events: none;
+  }
+  .btn .soon {
+    font-size: 11px; font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 5px;
+    color: var(--ink);
+    background: var(--amber);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.55);
+  }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--capsule) var(--tex-maroon) center / cover;
+    border-bottom: 3px solid var(--ink);
+    box-shadow: 0 5px 16px rgba(36,20,22,.35);
+  }
+  .topbar .wrap {
+    display: flex; align-items: center; gap: 14px;
+    padding: 13px var(--gutter);
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-size: 34px; line-height: 1;
+    color: var(--bone);
+    text-transform: lowercase;
+    margin-right: auto;
+    text-shadow: 0 2px 0 rgba(0,0,0,.55);
+  }
+  .brand .dot { color: var(--lime); }
+
+  .lang {
+    display: flex; align-items: center;
+    border: 2px solid var(--ink); border-radius: 9px;
+    overflow: hidden;
+    box-shadow: var(--lift-sm);
+  }
+  .lang button {
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border: none; cursor: pointer;
+    background: var(--olive); color: var(--ink);
+    transition: background .12s, color .12s;
+  }
+  .lang button:hover { background: var(--bone); }
+  .lang button.on { background: var(--lime); color: var(--ink); }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    padding: 64px 0 72px;
+    text-align: center;
+    border-bottom: 3px solid var(--ink);
+  }
+
+  /* The settler — assets/unit1.png, the base agent, and the same silhouette the
+     house mark is drawn from. Masked rather than placed as an image so it takes
+     the ink colour and stays a flat shape; the source is only 88x94, so it is
+     upscaled and its alpha re-thresholded (see CLAUDE.md) and should not be
+     pushed much past this size until there is a bigger original. */
+  .settler {
+    width: 132px; height: 141px;
+    margin: 0 auto 8px;
+    background-color: var(--capsule);
+    -webkit-mask: url('media/settler.png') center / contain no-repeat;
+    mask: url('media/settler.png') center / contain no-repeat;
+    filter: drop-shadow(4px 5px 0 rgba(36,20,22,.28));
+  }
+  h1.wordmark {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(88px, 17vw, 230px);
+    line-height: .9;
+    letter-spacing: .02em;
+    text-transform: lowercase;
+    margin: 0;
+    color: var(--capsule);
+    text-shadow: 0 5px 0 rgba(36,20,22,.22);
+  }
+  h1.wordmark .dot { color: var(--sienna); }
+  h1.wordmark { color: var(--capsule); }
+
+  .tagline {
+    margin: 22px auto 0;
+    max-width: 30ch;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--on-paper);
+  }
+
+  /* build → survive → fall → evolve — the whole pitch in four words */
+  .loop {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 10px 18px;
+    margin: 34px 0 0;
+    padding: 0; list-style: none;
+    font-family: var(--font-display);
+    font-size: 30px;
+    text-transform: lowercase;
+    color: var(--sienna);
+    text-shadow: 0 2px 0 rgba(36,20,22,.14);
+  }
+  .loop li { display: flex; align-items: center; gap: 18px; }
+  .loop li:not(:last-child)::after { content: "→"; color: var(--muted); opacity: .6; font-size: 22px; }
+
+  .cta-row {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 18px;
+    margin-top: 42px;
+  }
+
+  .meta {
+    margin-top: 34px;
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 500;
+    letter-spacing: .1em;
+    color: var(--muted);
+  }
+
+  /* ============ SECTIONS ============ */
+  section.block { padding: 76px 0; border-bottom: 3px solid var(--ink); }
+  section.block:nth-of-type(even) { background: rgba(36,20,22,.055); }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(38px, 6vw, 58px);
+    line-height: 1;
+    text-transform: lowercase;
+    color: var(--oxide);
+    margin: 0 0 40px;
+    text-align: center;
+    text-shadow: 0 3px 0 rgba(51,25,26,.14);
+  }
+
+  /* ============ SCREENS ============ */
+  .shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .shot {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    margin: 0;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .shot figcaption {
+    font-family: var(--font-display);
+    font-size: 28px;
+    text-transform: lowercase;
+    color: var(--bone);
+    opacity: .78;
+    text-shadow: 0 2px 0 rgba(0,0,0,.45);
+  }
+
+  /* ============ SYSTEMS ============ */
+  .systems { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .sys {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 26px 28px;
+  }
+  .sys .ic {
+    flex: 0 0 auto;
+    width: 40px; height: 40px;
+    background-color: var(--lime);
+    -webkit-mask: var(--src) center / contain no-repeat;
+    mask: var(--src) center / contain no-repeat;
+    filter: drop-shadow(0 2px 0 rgba(0,0,0,.5));
+  }
+  .sys h3 {
+    font-family: var(--font-display);
+    font-weight: 400; font-size: 30px; line-height: 1.05;
+    text-transform: lowercase;
+    color: var(--bone);
+    margin: 0 0 8px;
+    text-shadow: 0 2px 0 rgba(0,0,0,.45);
+  }
+  .sys p { margin: 0; font-size: 17px; line-height: 1.45; color: var(--muted-bone); }
+
+  /* ============ COMMUNITY ============ */
+  .servers { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
+  .servers .btn { flex-direction: column; gap: 6px; min-width: 270px; padding: 24px 30px; }
+  .servers .flag {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .18em; text-transform: uppercase;
+    opacity: .7;
+  }
+  .servers .name {
+    font-family: var(--font-display);
+    font-size: 32px; line-height: 1;
+    text-transform: lowercase;
+    letter-spacing: 0;
+  }
+
+  /* ============ FOOTER ============
+     The "that ugly boy" mark, small, at the very end — the way LocalThunk sits
+     under Balatro. The only link out of the game's world. */
+  footer.site {
+    padding: 56px 0 64px;
+    text-align: center;
+    background: var(--capsule) var(--tex-maroon) center / cover;
+    border-top: 3px solid var(--ink);
+  }
+  .made {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted-bone);
+    margin-bottom: 18px;
+  }
+  /* The wordmark is an IMAGE, not live text in ugly_boy. That face is drawn as
+     hairlines for the main site's 150px+ masthead, and its extenders run about
+     seven times its x-height — set live at any size a footer can carry, the
+     strokes fall under a pixel and it renders as scratches. Rasterised at 400px
+     and masked down, they survive as anti-aliased grey.
+
+     Because the box is mostly extender, the two marks are aligned on the
+     wordmark's measured text band (dead centre of the image, 0.498 of its
+     height) rather than on the boxes — centring the boxes is what made the
+     puzzle piece look like it was floating off on its own. */
+  .tub {
+    display: inline-flex; align-items: center; gap: 14px;
+    color: var(--bone);
+    -webkit-tap-highlight-color: transparent;
+    transition: color .15s, transform .15s;
+  }
+  .tub:hover { color: var(--lime); transform: translateY(-2px); }
+  .tub .mark, .tub .name {
+    background-color: currentColor;
+    filter: drop-shadow(0 3px 0 rgba(0,0,0,.5));
+  }
+  /* Sized off the letters, not the boxes. Both images are tight-cropped to
+     their ink and both centre their ink within 0.4% of the box, so `center`
+     already aligns them — what looked broken was scale: the wordmark's
+     x-height is 14.6% of its box (the rest is those hairline extenders), so a
+     46px puzzle piece stood 2.7x the height of the words beside it.
+     Order and scale follow the main site's own masthead: wordmark first, then
+     the puzzle piece to its right, the piece roughly half the wordmark's box.
+     A small piece set beside those extenders just looked lost next to them.
+     Keep 1.885:1 on .name — that is the PNG's aspect, and any other ratio
+     letterboxes inside `contain` and shifts the words off the piece. */
+  .tub .mark {
+    width: 68px; height: 68px;
+    -webkit-mask: url('media/tub_mark.png') center / contain no-repeat;
+    mask: url('media/tub_mark.png') center / contain no-repeat;
+  }
+  .tub .name {
+    display: block;
+    width: 264px; height: 140px;
+    -webkit-mask: url('media/tub_wordmark.png') center / contain no-repeat;
+    mask: url('media/tub_wordmark.png') center / contain no-repeat;
+  }
+  .foot-links {
+    margin-top: 26px;
+    display: flex; justify-content: center; gap: 26px;
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--muted-bone);
+  }
+  .foot-links a { border-bottom: 2px solid transparent; padding-bottom: 2px; transition: color .15s, border-color .15s; }
+  .foot-links a:hover { color: var(--lime); border-bottom-color: var(--lime); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 780px) {
+    body { font-size: 17px; }
+    .hero { padding: 56px 0 52px; }
+    .systems, .shots { grid-template-columns: 1fr; }
+    section.block { padding: 54px 0; }
+    .loop { font-size: 24px; gap: 8px 12px; }
+    .loop li { gap: 12px; }
+    .tagline { font-size: 19px; }
+    .brand { font-size: 28px; }
+    .cta-row .btn, .servers .btn { width: 100%; }
+    .settler { width: 100px; height: 107px; }
+    .tub .name { width: 208px; height: 110px; }
+    .tub .mark { width: 54px; height: 54px; }
+  }
+  @media (max-width: 420px) {
+    .topbar .wrap { gap: 10px; }
+    .sys { flex-direction: column; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div id="app"></div>
+
+  <script src="lang-store.js"></script>
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

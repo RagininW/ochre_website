@@ -1,0 +1,12 @@
+// Cloudflare Worker for ochre.thatuglyboy.com — static, no build step.
+// Separate Worker from ../main-site and ../contact so all three deploy
+// independently and none can break the others.
+{
+  // must match the Worker in Cloudflare, or a deploy creates a second,
+  // unrouted Worker instead of updating the live one
+  "name": "ochre",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "."
+  }
+}
