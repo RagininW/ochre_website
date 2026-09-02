@@ -212,10 +212,16 @@ wordmark's box height. The main site now carries the same relationship, both the
 `.tub .name` must keep the PNG's 1.885:1 aspect. Any other ratio letterboxes
 inside `contain` and slides the words off the piece.
 
-`favicon.png` and `apple-touch-icon.png` are that same settler, in the site's
-maroon on its own paper. Drawn on a background rather than left transparent: a
-favicon is read at 16px and a bare silhouette loses its shape against a dark
-browser theme.
+The tab icon is that same settler, in the site's maroon on its own paper — this
+site's own mark, where `../main-site` and `../contact` use the house puzzle
+piece. Drawn on a background rather than left transparent: a favicon is read at
+16px and a bare silhouette loses its shape against a dark browser theme.
+
+`favicon-16/32/48.png` are drawn tighter in their frame than `favicon.png`,
+and are separate files rather than one 512 left to the browser to shrink — at
+16px the figure's arms are a pixel wide and a downscale of the large one loses
+them. The `?v=` on every icon link is not decoration: browsers hold a favicon
+well past a hard reload, so a change without it looks like it did nothing.
 
 `media/settler.png` is `assets/unit1.png` — the base agent, and the silhouette
 the house mark is drawn from. The source is only **88x94**, so it is upscaled 5x

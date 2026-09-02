@@ -147,7 +147,6 @@ function community() {
     <section class="block" id="community">
       <div class="wrap">
         <h2>${esc(c.title)}</h2>
-        <p class="comm-lead">${esc(c.lead)}</p>
         <div class="servers">${cards}</div>
       </div>
     </section>

@@ -96,7 +96,6 @@ const CONTENT = {
 
     community: {
       title: 'Community',
-      lead: 'Two servers, so there is one awake wherever you are.',
       cards: [
         { flag: 'Worldwide', name: 'English', key: 'en' },
         { flag: 'LATAM', name: 'Español', key: 'es' }
@@ -165,7 +164,6 @@ const CONTENT = {
 
     community: {
       title: 'Comunidad',
-      lead: 'Dos servidores, para que siempre haya uno despierto.',
       cards: [
         { flag: 'LATAM', name: 'Español', key: 'es' },
         { flag: 'Mundial', name: 'English', key: 'en' }
