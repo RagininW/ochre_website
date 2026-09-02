@@ -83,7 +83,6 @@ function hero() {
         <div class="cta-row">
           ${btn(LINKS.steam, LOGO.steam + esc(c.cta.steam), 'big primary')}
         </div>
-        <p class="meta">${esc(c.hero.meta)}</p>
       </div>
     </section>
   `;

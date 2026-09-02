@@ -45,8 +45,7 @@ const CONTENT = {
     },
 
     hero: {
-      tagline: 'A society of agents grows, falls, and leaves its genes to the next one.',
-      meta: 'Roguelite RTS · PC · Single player'
+      tagline: 'A society of agents grows, falls, and leaves its genes to the next one.'
     },
 
     cta: {
@@ -121,8 +120,7 @@ const CONTENT = {
     },
 
     hero: {
-      tagline: 'Una sociedad de agentes crece, cae y le deja sus genes a la siguiente.',
-      meta: 'RTS roguelite · PC · Un jugador'
+      tagline: 'Una sociedad de agentes crece, cae y le deja sus genes a la siguiente.'
     },
 
     cta: {
