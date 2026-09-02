@@ -1,12 +1,18 @@
-# ochre.thatuglyboy.com
+# ochre.thatuglyboy.com — Carved in Stone
 
-Single-page site for **ochre**, the roguelite RTS in
+Single-page site for **Carved in Stone**, the roguelite RTS in
 `D:\Documentos\Proyectos\Godot\agent_simulation`. Static, no build step, no
 dependencies. Same family as `../main-site` and `../contact`, its own Worker.
 
-The game was called *Age of Ages* until 2026-09-01, and *Agent RTS* before
-that. Nothing carries the old names now except one deliberate note in
-`settings_manager.py` (see below).
+The game has been *Agent RTS*, *Age of Ages*, *Ochre* and now **Carved in
+Stone**. Nothing carries an old name except the settings-file fallback chain in
+`settings_manager.py`, which is deliberate.
+
+**The hostname, the repo and the Worker are all still `ochre`** —
+`ochre.thatuglyboy.com`, `RagininW/ochre_website`, Worker `ochre-website`.
+Renaming those means new DNS, a new custom domain and a repo rename in GitHub,
+which is a deploy-time decision rather than a code one. Until someone makes it,
+the URL and the title simply differ; nothing is broken by that.
 
 ## Not deployed yet
 

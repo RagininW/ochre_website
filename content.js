@@ -1,13 +1,13 @@
 // ============================================================
-// Ochre — all copy and every outbound link
+// Carved in Stone — all copy and every outbound link
 //
 // A plain script, not a fetched .json, on purpose: the main site's
 // JSON-parse failures are silent (it falls back to a stale inline copy and
 // the edit looks like it did nothing). A syntax error here throws in the
 // console and the page stops, which is the failure mode worth having.
 //
-// CASING: game sites use regular casing — "Ochre", "Wishlist on Steam",
-// "About". That is the opposite of thatuglyboy.com, which is lowercase
+// CASING: game sites use regular casing — "Carved in Stone", "Wishlist on
+// Steam", "About". That is the opposite of thatuglyboy.com, which is lowercase
 // throughout. Do not "fix" one to match the other; the split is deliberate,
 // and there is no text-transform on this page enforcing it, so the strings
 // here are what ships.
@@ -22,7 +22,7 @@
 // carrying a "Soon" chip, so an unfilled slot is visible on the page.
 const LINKS = {
   // Steam store page. Fill in once the app id exists:
-  // 'https://store.steampowered.com/app/<appid>/ochre/'
+  // 'https://store.steampowered.com/app/<appid>/carved-in-stone/'
   steam: '',
 
   // Two servers, by language. es = LATAM, en = everywhere else.
@@ -40,7 +40,7 @@ const LINKS = {
 const CONTENT = {
   en: {
     meta: {
-      title: 'Ochre — a roguelite RTS',
+      title: 'Carved in Stone — a roguelite RTS',
       description: 'A society of agents grows, falls, and leaves its genes to the next one.'
     },
 
@@ -116,7 +116,7 @@ const CONTENT = {
 
   es: {
     meta: {
-      title: 'Ochre — un RTS roguelite',
+      title: 'Carved in Stone — un RTS roguelite',
       description: 'Una sociedad de agentes crece, cae y le deja sus genes a la siguiente.'
     },
 

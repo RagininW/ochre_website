@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ochre — a roguelite RTS</title>
+<title>Carved in Stone — a roguelite RTS</title>
 <meta name="description" content="A society of agents grows, falls, and leaves its genes to the next one." />
 <!-- The settler (assets/unit1.png), transparent — the game's tab icon, not the
      house puzzle piece the other two sites use.
@@ -31,8 +31,8 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
 
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Ochre" />
-<meta property="og:title" content="Ochre — a roguelite RTS" />
+<meta property="og:site_name" content="Carved in Stone" />
+<meta property="og:title" content="Carved in Stone — a roguelite RTS" />
 <meta property="og:description" content="A society of agents grows, falls, and leaves its genes to the next one." />
 <meta property="og:url" content="https://ochre.thatuglyboy.com" />
 <meta name="theme-color" content="#e7d4ab" />
@@ -329,12 +329,26 @@
     mask: url('media/settler.png') center / contain no-repeat;
     filter: drop-shadow(4px 5px 0 rgba(59,28,23,.26));
   }
+  /* "Carved in Stone" is 6.82 ems wide in lingming — the wider of the two
+     display faces (sable measures 6.07, but carries size-adjust: 110%, so it
+     lands at 6.67). At the old 230px cap, written for the five letters of the
+     previous name, it broke onto two lines and filled the hero.
+
+     So the size is derived rather than picked: the largest that still fits the
+     wrap on one line. `nowrap` then makes a mistake in that sum visible as an
+     overflow rather than silently re-wrapping. If the title changes again,
+     re-measure the em width — canvas `measureText` at a known size, remembering
+     that it does not apply CSS size-adjust. */
   h1.wordmark {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(88px, 17vw, 230px);
-    line-height: .9;
-    letter-spacing: .02em;
+    --wordmark-em: 6.83;
+    font-size: clamp(36px,
+      calc((min(100vw, var(--max)) - 2 * var(--gutter)) / var(--wordmark-em)),
+      166px);
+    line-height: 1.02;
+    letter-spacing: .01em;
+    white-space: nowrap;
     text-transform: none;
     margin: 0;
     color: var(--capsule);

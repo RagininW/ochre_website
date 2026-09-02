@@ -58,7 +58,7 @@ function topbar() {
   return `
     <header class="topbar">
       <div class="wrap">
-        <a class="brand" href="#top">Ochre</a>
+        <a class="brand" href="#top">Carved in Stone</a>
         ${btn(LINKS.steam, LOGO.steam + esc(c.cta.steamShort), 'sm primary')}
         ${btn(LINKS.discord[LANG], LOGO.discord + esc(c.cta.discord), 'sm')}
         <div class="lang">
@@ -78,7 +78,7 @@ function hero() {
     <section class="hero" id="top">
       <div class="wrap">
         <div class="settler" aria-hidden="true"></div>
-        <h1 class="wordmark">Ochre</h1>
+        <h1 class="wordmark">Carved in Stone</h1>
         <p class="tagline">${esc(c.hero.tagline)}</p>
         <div class="cta-row">
           ${btn(LINKS.steam, LOGO.steam + esc(c.cta.steam), 'big primary')}
@@ -165,7 +165,7 @@ function footer() {
           <span class="mark" aria-hidden="true"></span>
         </a>
         <div class="foot-links">
-          <span>Ochre ${esc(c.rights)}</span>
+          <span>Carved in Stone ${esc(c.rights)}</span>
           <a href="${esc(LINKS.contact[LANG] || LINKS.contact.en)}">${esc(c.contact)}</a>
         </div>
       </div>
