@@ -84,7 +84,15 @@ hand-crop a screen capture, because the HUD is in one and this has no HUD in it.
 Three things that script has to get right, and they are worth knowing before
 editing it:
 
-- **The HUD comes off three different ways.** `game_ui = None` drops the whole
+- **Two of the six keep the HUD on.** A store page that never shows the
+  interface hides the thing a strategy player most wants to see, so `screen-2`
+  has a building selected (its card, stores and build range) and `screen-3` a
+  squad selected and under orders (the class breakdown, the command island,
+  the rings and order lines). A `ui=` hook on the Scene runs after the ticks
+  and undoes the three suppressions below. Those scenes also get their
+  stockpiles seeded — a couple of hundred ticks is not long enough to earn any
+  knowledge or spirituality, and four zeros in the ribbon reads as a bug.
+- **The HUD comes off three different ways** for the other four. `game_ui = None` drops the whole
   HUD block. `_cinematic_clean()` — the game's own switch, written for the
   defeat close-up — takes the selection rings, order lines, targeting lines and
   the alarm "!". `_draw_marked_figure` is stubbed because the "0 / 200" under a
