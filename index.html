@@ -506,28 +506,24 @@
   }
   /* The plate is a grid, not a row of three loose things.
 
-       row 1   region, and the status chip at the far end of it
-       row 2   the name, alone
-       col 1   the mark, spanning both rows and centred on them
+       col 1   the mark, spanning and matching both rows
+       row 1   the region label
+       row 2   the name
 
-     Sorted by importance, not by reading order. The name is what the plate is
-     for, so it gets a whole row to itself; region and status are both labels
-     about it, so they share the row above and bracket it. Centring the chip
-     across both rows instead left it hanging in the middle of a lot of empty
-     plate with nothing to align to.
+     Sorted by importance, not by reading order: the name is what the plate is
+     for and gets its own row, the region is a label about it and sits above.
 
-     The mark and the chip are the same object in every plate, so they take the
-     fixed columns and the name gets the elastic one — which is what keeps the
-     two plates identical to each other rather than each packing itself around
-     its own text length.
+     The status tag is out of this grid entirely — see below — so the two rows
+     are sized by the type alone and the mark can be measured against them.
 
      The label and the name meet in the middle of the row gap, one growing down
-     and the other up, so the pair reads as a single block whatever either
-     one's line-height does. */
+     and the other up, so the pair reads as one block whatever either one's
+     line-height does. */
   .servers .btn {
+    position: relative;          /* the tag hangs off this */
     width: 100%;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr;
     grid-template-rows: auto auto;
     column-gap: 20px;
     row-gap: 6px;
@@ -535,17 +531,19 @@
     padding: 24px 26px;
     text-align: left;
   }
+  /* Sized by the rows it spans rather than by a number: `stretch` takes the
+     full height of both text rows plus the gap between them, and the aspect
+     ratio makes it square from that. A fixed em would need re-tuning every
+     time the label or the name changes size. */
   .servers .logo {
     grid-area: 1 / 1 / 3 / 2;
-    align-self: center;
-    width: 2.7em; height: 2.7em;
+    align-self: stretch;
+    width: auto; height: auto;
+    aspect-ratio: 1;
   }
   .servers .flag {
     grid-area: 1 / 2 / 2 / 3;
-    /* centred, not bottom-aligned: the chip is twice the label's height and
-       sets the row, so `end` hung the chip's top above it. Centred, the two
-       read as one line of labels. */
-    align-self: center;
+    align-self: end;
     font-family: var(--font-mono);
     font-size: 12px; font-weight: 500;
     line-height: 1;
@@ -559,10 +557,30 @@
     font-size: 34px; line-height: 1;
     letter-spacing: 0;
   }
+  /* A tag pinned to the corner rather than a chip sitting inside the plate —
+     the same thing a sale sticker does on a shelf. Out of the grid and hung
+     over the plate's own outline, so it reads as stuck on afterwards, which is
+     what a status is: the plate is the server, the tag is a note about it.
+
+     Uppercase and rotated, both deliberately against the rest of the page —
+     it is a stamp, not a label, and the exception is what makes it read as
+     one. Its own ink outline and offset shadow so it sits above the plate's. */
   .servers .btn .soon {
-    grid-area: 1 / 3 / 2 / 4;
-    align-self: center;
-    justify-self: end;
+    position: absolute;
+    top: -13px; right: -13px;
+    z-index: 2;
+    transform: rotate(-7deg);
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    color: var(--ink);
+    background: var(--amber);
+    border: 3px solid var(--ink);
+    border-radius: 7px;
+    box-shadow: 3px 3px 0 var(--ink);
+    opacity: 1;
   }
 
   /* ============ FOOTER ============
