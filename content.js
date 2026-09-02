@@ -83,8 +83,16 @@ const CONTENT = {
       ]
     },
 
+    // Rendered headless out of the game itself — see
+    // agent_simulation/generate_site_screenshots.py. The caption is the alt
+    // text; it is not drawn, so it can say what the frame actually shows.
     screens: {
-      shots: ['The settlement', 'A wild cave', 'The legacy tree', 'The reckoning']
+      shots: [
+        { src: 'media/screen-1.jpg', alt: 'A settlement at work, with dogs and an entertainer among the gatherers' },
+        { src: 'media/screen-2.jpg', alt: 'A wolf pack in among warriors and their dogs' },
+        { src: 'media/screen-3.jpg', alt: 'Spiders over the faith quarter' },
+        { src: 'media/screen-4.jpg', alt: 'A small camp on the water, seen wide' }
+      ]
     },
 
     community: {
@@ -148,7 +156,12 @@ const CONTENT = {
     },
 
     screens: {
-      shots: ['El asentamiento', 'Una cueva salvaje', 'El árbol de legado', 'El ajuste de cuentas']
+      shots: [
+        { src: 'media/screen-1.jpg', alt: 'Un asentamiento trabajando, con perros y un animador entre los recolectores' },
+        { src: 'media/screen-2.jpg', alt: 'Una manada de lobos entre guerreros y sus perros' },
+        { src: 'media/screen-3.jpg', alt: 'Arañas sobre el barrio de la fe' },
+        { src: 'media/screen-4.jpg', alt: 'Un campamento pequeño sobre el agua, en plano abierto' }
+      ]
     },
 
     community: {

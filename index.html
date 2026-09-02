@@ -12,7 +12,7 @@
 <meta property="og:title" content="Ochre — a roguelite RTS" />
 <meta property="og:description" content="A society of agents grows, falls, and leaves its genes to the next one." />
 <meta property="og:url" content="https://ochre.thatuglyboy.com" />
-<meta name="theme-color" content="#e2d5b5" />
+<meta name="theme-color" content="#e7d4ab" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,12 +64,13 @@
        assets.py Lascaux oxide      L.491 C.129 H 33
 
      Every pair below was checked against WCAG. Body text on paper is 10.6:1,
-     text on the maroon plates 10.6:1, the section headings 4.4:1 and the loop
-     3.4:1 (both large display sizes, which need 3.0). Chroma is roughly 25-40%
-     above the raw plates — that is the "liveliness", and it is free because
-     OKLCH holds lightness steady while chroma moves, so nothing lost contrast
-     on the way. If you change a value, change L for contrast and C for
-     saturation; they do not interfere.
+     text on the maroon plates 10.8:1, the section headings 4.5:1 and the loop
+     3.4:1 (both large display sizes, which need 3.0). Chroma runs 1.5-2x the
+     raw plates and several values sit at the sRGB gamut edge for their
+     lightness — that is the "liveliness", and it costs no contrast because
+     OKLCH holds lightness steady while chroma moves. If you change a value,
+     change L for contrast and C for saturation; they do not interfere, which
+     is the whole reason the palette is specified this way.
 
      The page is a sheet of paper and everything else is a plate lying on it.
      Nothing may be the same colour as the paper — that is what keeps the
@@ -80,20 +81,27 @@
     --font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
 
     --ink:        #000000;
-    --paper:      #e2d5b5;   /* L .875 C .045 H  88 */
-    --paper-2:    #d6c8a6;   /* L .835 C .048 H  88 */
-    --capsule:    #4e2524;   /* L .320 C .062 H  22 */
-    --capsule-hi: #643332;   /* L .385 C .070 H  22 */
-    --bone:       #f0e8cc;   /* L .930 C .038 H  95 — type on maroon */
-    --olive:      #c6bf97;   /* L .800 C .055 H 100 — the not-yet plate */
-    --lime:       #dee05f;   /* L .880 C .150 H 110 — primary */
-    --lime-hi:    #f0ef84;   /* L .930 C .130 H 108 */
-    --sienna:     #b65500;   /* L .560 C .150 H  52 — the loop */
-    --oxide:      #aa3527;   /* L .500 C .155 H  30 — headings */
-    --amber:      #e8a127;   /* L .760 C .150 H  75 — chips */
-    --on-paper:   #3b1c17;   /* L .270 C .050 H  30 */
-    --muted:      #7d524a;   /* L .485 C .060 H  32 — secondary on paper */
-    --muted-bone: #c2ae92;   /* L .760 C .045 H  75 — secondary on maroon */
+    --paper:      #e7d4ab;   /* L .875 C .058 H  86 */
+    --paper-2:    #dac69b;   /* L .833 C .062 H  86 */
+    --capsule:    #581b1f;   /* L .320 C .090 H  20 */
+    --capsule-hi: #712a2e;   /* L .390 C .100 H  20 */
+    --bone:       #f2e8c3;   /* L .930 C .050 H  95 — type on maroon */
+    --olive:      #cabf87;   /* L .800 C .075 H  98 — the not-yet plate */
+    --lime:       #dbe240;   /* L .880 C .175 H 112 — primary */
+    --lime-hi:    #eef171;   /* L .930 C .150 H 110 */
+    --sienna:     #c24800;   /* L .560 C .180 H  50 — the loop */
+    --oxide:      #b3241f;   /* L .500 C .180 H  28 — headings */
+    --amber:      #f29c00;   /* L .760 C .170 H  72 — chips */
+    --on-paper:   #421612;   /* L .270 C .070 H  28 */
+    --muted:      #894b42;   /* L .485 C .085 H  30 — secondary on paper */
+    --muted-bone: #c9ab87;   /* L .760 C .060 H  72 — secondary on maroon */
+
+    /* One accent per About card. They only ever sit on the maroon plate, which
+       is why they can run this bright: 9.4, 6.0, 4.4 and 5.8 to 1 against it. */
+    --ic-1: #dbe240;
+    --ic-2: #f29c00;
+    --ic-3: #e07a2a;
+    --ic-4: #3fbfae;
 
     --tex-maroon: url('media/tex_maroon.png');
     --tex-bone:   url('media/tex_bone.png');
@@ -348,8 +356,59 @@
   }
 
   /* ============ SECTIONS ============ */
-  section.block { padding: 76px 0; border-bottom: 3px solid var(--ink); }
+  section.block {
+    position: relative;
+    padding: 76px 0;
+    border-bottom: 3px solid var(--ink);
+  }
+
+  /* A frame of the game itself under each band, washed almost out.
+     Two rules keep it from turning into a busy background:
+     - `luminosity` blending, so it contributes light and shade but no colour of
+       its own; the paper's hue survives and the section still reads as the
+       same sheet rather than a photo pasted on.
+     - a mask that fades it to nothing at both edges, so no band has a visible
+       seam where the picture stops.
+     `background-attachment: fixed` gives a slight parallax as the page scrolls,
+     which is what stops it reading as a flat texture. */
+  section.block::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background: var(--bg-art) center / cover no-repeat fixed;
+    mix-blend-mode: luminosity;
+    opacity: .16;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
+  }
+  section.block > .wrap { position: relative; z-index: 1; }
+
+  #about   { --bg-art: url('media/bg-1.jpg'); }
+  #screens { --bg-art: url('media/bg-3.jpg'); }
+  #community { --bg-art: url('media/bg-4.jpg'); }
   section.block:nth-of-type(even) { background: rgba(59,28,23,.055); }
+
+  /* The hero gets one too, weaker still — the wordmark sits over it. */
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background: url('media/bg-2.jpg') center / cover no-repeat;
+    mix-blend-mode: luminosity;
+    opacity: .12;
+    -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 45%, #000 30%, transparent 78%);
+    mask-image: radial-gradient(ellipse 75% 80% at 50% 45%, #000 30%, transparent 78%);
+  }
+  .hero > .wrap { position: relative; z-index: 1; }
+
+  /* Fixed attachment is a scroll cost on phones and the parallax is invisible
+     at that size anyway. */
+  @media (max-width: 780px) {
+    section.block::before { background-attachment: scroll; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    section.block::before { background-attachment: scroll; }
+  }
   h2 {
     font-family: var(--font-display);
     font-weight: 400;
@@ -371,13 +430,10 @@
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
   }
-  .shot figcaption {
-    font-family: var(--font-display);
-    font-size: 28px;
-    text-transform: none;
-    color: var(--bone);
-    opacity: .78;
-    text-shadow: 0 2px 0 rgba(0,0,0,.45);
+  .shot img {
+    display: block;
+    width: 100%; height: 100%;
+    object-fit: cover;
   }
 
   /* ============ SYSTEMS ============ */
@@ -386,10 +442,14 @@
     display: flex; align-items: flex-start; gap: 20px;
     padding: 26px 28px;
   }
+  .sys:nth-child(1) .ic { background-color: var(--ic-1); }
+  .sys:nth-child(2) .ic { background-color: var(--ic-2); }
+  .sys:nth-child(3) .ic { background-color: var(--ic-3); }
+  .sys:nth-child(4) .ic { background-color: var(--ic-4); }
   .sys .ic {
     flex: 0 0 auto;
     width: 40px; height: 40px;
-    background-color: var(--lime);
+    background-color: var(--ic-1);
     -webkit-mask: var(--src) center / contain no-repeat;
     mask: var(--src) center / contain no-repeat;
     filter: drop-shadow(0 2px 0 rgba(0,0,0,.5));
@@ -465,10 +525,16 @@
      0.594 of the mark, which is 9.38% BELOW the mark's own box centre. So
      centring the two boxes puts the peg low against the words.
 
-     --peg-drop is that measured 0.0938. The mark is shifted up by exactly that
-     fraction of its own height, which lands the centre of the left peg on the
-     centre of "that ugly boy". Both numbers come from the alpha channel; if
-     either PNG is redrawn, re-measure rather than nudging this by eye.
+     The target is the MEANLINE — the top of the x-height, where "that ugly
+     boy" has no capitals or ascenders — not the middle of the words. Measured
+     off the same alpha channel, that line sits at 0.4231 of the wordmark's
+     height, where the box centre is 0.5.
+
+     So with both boxes centred on the flex line, the mark carries two
+     corrections: 0.0938 of its own height for the peg sitting low in it, and
+     0.0769 of the wordmark's height to come up from the centre to the
+     meanline. Both are measurements; if either PNG is redrawn, re-measure
+     rather than nudging by eye.
 
      Scale: the wordmark's x-height is only 14.6% of its box (the rest is those
      hairline extenders), so a mark sized to the box towers over the words —
@@ -479,18 +545,21 @@
      letterboxes inside `contain` and slides the words off the piece. */
   .tub {
     --mark: 68px;
-    --peg-drop: 0.0938;
+    --name-h: 140px;
+    --peg-drop: 0.0938;    /* peg centre below the mark's box centre */
+    --mean-rise: 0.0769;   /* box centre up to the meanline */
     --tub-gap: 14px;
   }
   .tub .mark {
     width: var(--mark); height: var(--mark);
-    transform: translateY(calc(var(--mark) * var(--peg-drop) * -1));
+    transform: translateY(calc(
+      (var(--mark) * var(--peg-drop) * -1) + (var(--name-h) * var(--mean-rise) * -1)));
     -webkit-mask: url('media/tub_mark.png') center / contain no-repeat;
     mask: url('media/tub_mark.png') center / contain no-repeat;
   }
   .tub .name {
     display: block;
-    width: 264px; height: 140px;
+    width: 264px; height: var(--name-h);
     -webkit-mask: url('media/tub_wordmark.png') center / contain no-repeat;
     mask: url('media/tub_wordmark.png') center / contain no-repeat;
   }
@@ -526,8 +595,8 @@
     .brand { font-size: 28px; }
     .cta-row .btn, .servers .btn { width: 100%; }
     .settler { width: 100px; height: 107px; }
-    .tub { --mark: 54px; --tub-gap: 11px; }
-    .tub .name { width: 208px; height: 110px; }
+    .tub { --mark: 54px; --name-h: 110px; --tub-gap: 11px; }
+    .tub .name { width: 208px; }
   }
   @media (max-width: 420px) {
     .topbar .wrap { gap: 10px; }

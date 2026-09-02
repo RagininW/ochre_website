@@ -116,8 +116,12 @@ function about() {
 // word "Screens" over them was the label of a thing already labelled.
 function screens() {
   const c = C().screens;
-  const shots = c.shots.map((cap) => `
-    <figure class="shot"><figcaption>${esc(cap)}</figcaption></figure>
+  // Real frames now, so the plate is just a frame: no caption over the picture,
+  // and the alt text carries what it shows.
+  const shots = c.shots.map((s) => `
+    <figure class="shot">
+      <img src="${esc(s.src)}" alt="${esc(s.alt)}" loading="lazy" decoding="async">
+    </figure>
   `).join('');
   return `
     <section class="block" id="screens">
