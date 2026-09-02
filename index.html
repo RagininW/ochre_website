@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Ochre — a roguelite RTS</title>
 <meta name="description" content="A society of agents grows, falls, and leaves its genes to the next one." />
+<!-- The settler (assets/unit1.png) on the site's own paper. Drawn on a
+     background rather than left transparent: a favicon is read at 16px, and a
+     bare silhouette loses its shape against a dark browser theme. -->
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Ochre" />
@@ -362,22 +366,22 @@
     border-bottom: 3px solid var(--ink);
   }
 
-  /* A frame of the game itself under each band, washed almost out.
-     Two rules keep it from turning into a busy background:
-     - `luminosity` blending, so it contributes light and shade but no colour of
-       its own; the paper's hue survives and the section still reads as the
-       same sheet rather than a photo pasted on.
-     - a mask that fades it to nothing at both edges, so no band has a visible
-       seam where the picture stops.
-     `background-attachment: fixed` gives a slight parallax as the page scrolls,
+  /* A frame of the game itself under each band.
+     It blends `soft-light` rather than `luminosity`: luminosity contributes
+     light and shade but strips the picture's own colour, which made the bands
+     read as grey texture. Soft-light keeps the hue and still sits under the
+     paper rather than on top of it — so the opacity comes down as the colour
+     comes up, and the wash is fainter overall than the grey one was.
+     The mask fades it to nothing at both edges, so no band has a seam where
+     the picture stops. `background-attachment: fixed` gives a slight parallax,
      which is what stops it reading as a flat texture. */
   section.block::before {
     content: "";
     position: absolute; inset: 0;
     pointer-events: none;
     background: var(--bg-art) center / cover no-repeat fixed;
-    mix-blend-mode: luminosity;
-    opacity: .16;
+    mix-blend-mode: soft-light;
+    opacity: .55;
     -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
     mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
   }
@@ -394,8 +398,8 @@
     position: absolute; inset: 0;
     pointer-events: none;
     background: url('media/bg-2.jpg') center / cover no-repeat;
-    mix-blend-mode: luminosity;
-    opacity: .12;
+    mix-blend-mode: soft-light;
+    opacity: .42;
     -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 45%, #000 30%, transparent 78%);
     mask-image: radial-gradient(ellipse 75% 80% at 50% 45%, #000 30%, transparent 78%);
   }
@@ -517,51 +521,72 @@
     background-color: currentColor;
     filter: drop-shadow(0 3px 0 rgba(0,0,0,.5));
   }
-  /* Sized and aligned off the ARTWORK, not the boxes.
+  /* ============ THE LOCKUP ============
+     The rules are brand, not layout — ../BRAND.md is the record, and the main
+     site's masthead is built from the same three. Everything here is a ratio of
+     the wordmark's height, so the pair holds together at any size.
 
-     Both PNGs are tight-cropped to their ink. The wordmark's x-height band sits
-     at 0.496 of its box — dead centre — so the words need no correction. The
-     puzzle piece does: its left peg spans rows 73..117 of 160, centred at
-     0.594 of the mark, which is 9.38% BELOW the mark's own box centre. So
-     centring the two boxes puts the peg low against the words.
+       1. the piece is 0.4857 of the wordmark's height
+       2. the centre of its left peg sits on the wordmark's MEANLINE — the top
+          of the x-height, which is what "that ugly boy" reads along, having no
+          capitals in it
+       3. the gap is 0.10 of the wordmark's height
 
-     The target is the MEANLINE — the top of the x-height, where "that ugly
-     boy" has no capitals or ascenders — not the middle of the words. Measured
-     off the same alpha channel, that line sits at 0.4231 of the wordmark's
-     height, where the box centre is 0.5.
+     The piece's size is a chosen number, not a derived one. Deriving it from
+     "top of the piece meets the top of the letters" gives 0.6907 and a piece
+     that is too heavy beside this wordmark — the extenders are hairlines and a
+     piece tall enough to match them outweighs the words. 0.4857 is the value
+     that was picked by eye and kept; the piece sits below the ascenders on
+     purpose.
 
-     So with both boxes centred on the flex line, the mark carries two
-     corrections: 0.0938 of its own height for the peg sitting low in it, and
-     0.0769 of the wordmark's height to come up from the centre to the
-     meanline. Both are measurements; if either PNG is redrawn, re-measure
-     rather than nudging by eye.
+     Rule 2 does the vertical. With both boxes starting at the flex line's top,
+     the meanline is 0.4154 of the wordmark down and the peg is 0.6014 of the
+     piece down, so the piece moves down by
+     0.4154 - 0.6014 x 0.4857 = 0.1233 of the wordmark's height.
 
-     Scale: the wordmark's x-height is only 14.6% of its box (the rest is those
-     hairline extenders), so a mark sized to the box towers over the words —
-     .mark is kept near half the wordmark's height. Order and proportion follow
-     the main site's own masthead: wordmark first, piece to its right.
+     Both PNGs are cropped tight to their ink, so their boxes ARE the artwork
+     and `flex-start` aligns rule 1 with no correction. tub_wordmark.png is
+     "that ugly boy" — no full stop, matching the masthead — rendered from
+     ../main-site/fonts/ugly_boy.ttf, which is not loaded as a webfont here: it
+     is drawn as hairlines for a 150px+ masthead and renders as scratches at any
+     size a footer can carry.
 
-     Keep 1.885:1 on .name — that is the PNG's aspect, and any other ratio
-     letterboxes inside `contain` and slides the words off the piece. */
+     .name must keep the PNG's 1.8846 aspect. Any other ratio letterboxes it
+     inside `contain` and slides the words off the piece. */
   .tub {
-    --mark: 68px;
-    --name-h: 140px;
-    --peg-drop: 0.0938;    /* peg centre below the mark's box centre */
-    --mean-rise: 0.0769;   /* box centre up to the meanline */
-    --tub-gap: 14px;
+    --wordmark-h: 140px;
+    --mark-r:   0.4857;  /* piece height / wordmark height */
+    --gap-r:    0.1000;  /* gap / wordmark height */
+    --mean-r:   0.4154;  /* meanline, as a fraction of the wordmark's height */
+    --peg-r:    0.6014;  /* peg centre, as a fraction of the piece's height */
+    --wm-aspect: 1.8846;
+
+    display: inline-flex;
+    align-items: flex-start;
+    gap: calc(var(--wordmark-h) * var(--gap-r));
+    color: var(--bone);
+    -webkit-tap-highlight-color: transparent;
   }
-  .tub .mark {
-    width: var(--mark); height: var(--mark);
-    transform: translateY(calc(
-      (var(--mark) * var(--peg-drop) * -1) + (var(--name-h) * var(--mean-rise) * -1)));
-    -webkit-mask: url('media/tub_mark.png') center / contain no-repeat;
-    mask: url('media/tub_mark.png') center / contain no-repeat;
+  .tub:hover { color: var(--lime); transform: translateY(-2px); }
+  .tub .mark, .tub .name {
+    display: block;
+    background-color: currentColor;
+    filter: drop-shadow(0 3px 0 rgba(0,0,0,.5));
   }
   .tub .name {
-    display: block;
-    width: 264px; height: var(--name-h);
+    height: var(--wordmark-h);
+    width: calc(var(--wordmark-h) * var(--wm-aspect));
     -webkit-mask: url('media/tub_wordmark.png') center / contain no-repeat;
     mask: url('media/tub_wordmark.png') center / contain no-repeat;
+  }
+  .tub .mark {
+    height: calc(var(--wordmark-h) * var(--mark-r));
+    width:  calc(var(--wordmark-h) * var(--mark-r));
+    /* rule 2: down from the shared top by meanline - peg x mark */
+    transform: translateY(calc(
+      var(--wordmark-h) * (var(--mean-r) - var(--peg-r) * var(--mark-r))));
+    -webkit-mask: url('media/tub_mark.png') center / contain no-repeat;
+    mask: url('media/tub_mark.png') center / contain no-repeat;
   }
   .foot-links {
     margin-top: 26px;
@@ -595,8 +620,7 @@
     .brand { font-size: 28px; }
     .cta-row .btn, .servers .btn { width: 100%; }
     .settler { width: 100px; height: 107px; }
-    .tub { --mark: 54px; --name-h: 110px; --tub-gap: 11px; }
-    .tub .name { width: 208px; }
+    .tub { --wordmark-h: 110px; }
   }
   @media (max-width: 420px) {
     .topbar .wrap { gap: 10px; }

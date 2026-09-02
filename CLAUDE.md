@@ -182,6 +182,14 @@ renders as scratches. `media/tub_wordmark.png` is that text rasterised at 420px
 from `../main-site/fonts/ugly_boy.ttf`, cropped tight to its ink, and used as a
 CSS mask so it takes `currentColor`.
 
+The lockup's rules are the brand's, not this page's — they are recorded in
+`../BRAND.md`, which is the source for this site and the main site both. In
+short: the gap is 0.206 of the piece's width, the piece's left peg sits on the
+wordmark's meanline, and the piece is sized off the type rather than off its
+container. Only the *scale* differs between the two placements, because a
+masthead and a footer credit are different jobs — 1.17x the font-size there,
+0.52x here.
+
 The piece is aligned on the **meanline** — the top of the x-height, since
 "that ugly boy" has no capitals or ascenders — not on the middle of the words.
 Two measured corrections, both off the alpha channels:
@@ -203,6 +211,11 @@ wordmark's box height. The main site now carries the same relationship, both the
 
 `.tub .name` must keep the PNG's 1.885:1 aspect. Any other ratio letterboxes
 inside `contain` and slides the words off the piece.
+
+`favicon.png` and `apple-touch-icon.png` are that same settler, in the site's
+maroon on its own paper. Drawn on a background rather than left transparent: a
+favicon is read at 16px and a bare silhouette loses its shape against a dark
+browser theme.
 
 `media/settler.png` is `assets/unit1.png` — the base agent, and the silhouette
 the house mark is drawn from. The source is only **88x94**, so it is upscaled 5x
