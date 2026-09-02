@@ -436,8 +436,15 @@
 
   /* ============ SCREENS ============ */
   /* Three across, two down. Ordered closest-first in content.js, so the grid
-     itself shows the range of distances the game is played at. */
-  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+     itself shows the range of distances the game is played at.
+
+     The gallery breaks out of --max. Every other section is text and wants the
+     1180px measure; these are pictures and want the screen — inside the shared
+     wrap they were filling their column but only ~78% of the viewport, which
+     reads as a narrow strip of pictures rather than a gallery. Capped so a very
+     wide monitor does not blow the frames up past their source resolution. */
+  #screens > .wrap { max-width: min(92vw, 1900px); }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .shot {
     position: relative;
     aspect-ratio: 16 / 9;
