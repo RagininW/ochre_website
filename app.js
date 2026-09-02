@@ -135,11 +135,12 @@ function community() {
   // the name carries its own lang — which also picks the right display face.
   const cards = c.cards.map((s) => btn(
     LINKS.discord[s.key],
+    // Four flat children, not a wrapper around two of them — the plate lays
+    // them out on a grid, and a wrapper would hide the flag and the name from
+    // it. See `.servers .btn` in index.html.
     `${LOGO.discord}
-     <span class="server-txt">
-       <span class="flag">${esc(s.flag)}</span>
-       <span class="name" lang="${esc(s.key)}">${esc(s.name)}</span>
-     </span>`,
+     <span class="flag">${esc(s.flag)}</span>
+     <span class="name" lang="${esc(s.key)}">${esc(s.name)}</span>`,
     ''
   )).join('');
   return `
