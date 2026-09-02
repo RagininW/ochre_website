@@ -46,8 +46,7 @@ const CONTENT = {
 
     hero: {
       tagline: 'A society of agents grows, falls, and leaves its genes to the next one.',
-      loop: ['Build', 'Survive', 'Fall', 'Evolve'],
-      meta: 'Roguelite RTS · PC · Single player · In development'
+      meta: 'Roguelite RTS · PC · Single player'
     },
 
     cta: {
@@ -97,6 +96,7 @@ const CONTENT = {
 
     community: {
       title: 'Community',
+      lead: 'Two servers, so there is one awake wherever you are.',
       cards: [
         { flag: 'Worldwide', name: 'English', key: 'en' },
         { flag: 'LATAM', name: 'Español', key: 'es' }
@@ -118,8 +118,7 @@ const CONTENT = {
 
     hero: {
       tagline: 'Una sociedad de agentes crece, cae y le deja sus genes a la siguiente.',
-      loop: ['Construir', 'Sobrevivir', 'Caer', 'Evolucionar'],
-      meta: 'RTS roguelite · PC · Un jugador · En desarrollo'
+      meta: 'RTS roguelite · PC · Un jugador'
     },
 
     cta: {
@@ -166,6 +165,7 @@ const CONTENT = {
 
     community: {
       title: 'Comunidad',
+      lead: 'Dos servidores, para que siempre haya uno despierto.',
       cards: [
         { flag: 'LATAM', name: 'Español', key: 'es' },
         { flag: 'Mundial', name: 'English', key: 'en' }

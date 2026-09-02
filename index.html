@@ -331,21 +331,6 @@
     color: var(--on-paper);
   }
 
-  /* build → survive → fall → evolve — the whole pitch in four words */
-  .loop {
-    display: flex; flex-wrap: wrap; justify-content: center;
-    gap: 10px 18px;
-    margin: 34px 0 0;
-    padding: 0; list-style: none;
-    font-family: var(--font-display);
-    font-size: 30px;
-    text-transform: none;
-    color: var(--sienna);
-    text-shadow: 0 2px 0 rgba(59,28,23,.12);
-  }
-  .loop li { display: flex; align-items: center; gap: 18px; }
-  .loop li:not(:last-child)::after { content: "→"; color: var(--muted); opacity: .6; font-size: 22px; }
-
   .cta-row {
     display: flex; flex-wrap: wrap; justify-content: center; gap: 18px;
     margin-top: 42px;
@@ -370,8 +355,13 @@
      It blends `soft-light` rather than `luminosity`: luminosity contributes
      light and shade but strips the picture's own colour, which made the bands
      read as grey texture. Soft-light keeps the hue and still sits under the
-     paper rather than on top of it — so the opacity comes down as the colour
-     comes up, and the wash is fainter overall than the grey one was.
+     paper rather than on top of it.
+
+     The saturation and the opacity move in opposite directions on purpose. The
+     source images are pushed well past what looks right on their own (2.7x),
+     because soft-light at this opacity keeps only a fraction of it — so the
+     wash ends up more coloured AND fainter than a straight blend of the
+     originals would be.
      The mask fades it to nothing at both edges, so no band has a seam where
      the picture stops. `background-attachment: fixed` gives a slight parallax,
      which is what stops it reading as a flat texture. */
@@ -381,7 +371,7 @@
     pointer-events: none;
     background: var(--bg-art) center / cover no-repeat fixed;
     mix-blend-mode: soft-light;
-    opacity: .55;
+    opacity: .38;
     -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
     mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
   }
@@ -399,7 +389,7 @@
     pointer-events: none;
     background: url('media/bg-2.jpg') center / cover no-repeat;
     mix-blend-mode: soft-light;
-    opacity: .42;
+    opacity: .30;
     -webkit-mask-image: radial-gradient(ellipse 75% 80% at 50% 45%, #000 30%, transparent 78%);
     mask-image: radial-gradient(ellipse 75% 80% at 50% 45%, #000 30%, transparent 78%);
   }
@@ -469,20 +459,45 @@
   .sys p { margin: 0; font-size: 17px; line-height: 1.45; color: var(--muted-bone); }
 
   /* ============ COMMUNITY ============ */
-  .servers { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
-  .servers .btn { flex-direction: column; gap: 6px; min-width: 270px; padding: 24px 30px; }
+  /* Two equal plates across the row, not two shrink-wrapped ones huddled in
+     the middle — the pair was reading as an afterthought at the foot of the
+     page. Each carries Discord's own mark, masked to the plate's text colour. */
+  .comm-lead {
+    max-width: 46ch;
+    margin: -20px auto 40px;
+    text-align: center;
+    font-size: 18px;
+    color: var(--muted);
+  }
+  .servers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .servers .btn {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 26px 30px;
+    text-align: left;
+  }
+  .servers .logo { width: 2.7em; height: 2.7em; }
+  .servers .server-txt { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
   .servers .flag {
     font-family: var(--font-mono);
-    font-size: 11px; font-weight: 500;
-    letter-spacing: .14em;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .16em;
     opacity: .75;
   }
   .servers .name {
     font-family: var(--font-display);
-    font-size: 32px; line-height: 1;
-    text-transform: none;
+    font-size: 34px; line-height: 1;
     letter-spacing: 0;
   }
+  /* the chip goes to the far end of the plate, not up against the name */
+  .servers .btn .soon { margin-left: auto; align-self: center; }
 
   /* ============ FOOTER ============
      The "that ugly boy" mark, small, at the very end — the way LocalThunk sits
@@ -614,11 +629,12 @@
     .hero { padding: 56px 0 52px; }
     .systems, .shots { grid-template-columns: 1fr; }
     section.block { padding: 54px 0; }
-    .loop { font-size: 24px; gap: 8px 12px; }
-    .loop li { gap: 12px; }
     .tagline { font-size: 19px; }
     .brand { font-size: 28px; }
-    .cta-row .btn, .servers .btn { width: 100%; }
+    .cta-row .btn { width: 100%; }
+    .servers { grid-template-columns: 1fr; gap: 18px; }
+    .servers .name { font-size: 30px; }
+    .comm-lead { font-size: 17px; margin-top: -12px; }
     .settler { width: 100px; height: 107px; }
     .tub { --wordmark-h: 110px; }
   }

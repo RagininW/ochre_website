@@ -4,8 +4,8 @@
 `thatuglyboy.com` and the credit at the foot of `ochre.thatuglyboy.com`, and it
 will appear on every game site after this one.
 
-The two placements are **identical in every ratio** and differ only in colour
-and in overall size. That is the point: it should read as the same object
+The two placements share rules 2 and 3 exactly and differ only in the piece's
+size, in colour, and in overall scale. That is what keeps it the same object
 wherever it turns up.
 
 **Every relationship here is a ratio, and every ratio was measured.** None are
@@ -25,11 +25,23 @@ things up against.
 
 ## The three rules
 
-**1. The piece is 0.4857 of the wordmark's ink height.**
+**1. The piece is a fraction of the wordmark's ink height — the one ratio that
+is per-placement.**
 
-Chosen, not derived. Its top deliberately falls short of the ascenders: sizing
-it so the top meets them gives 0.69, and a piece that tall outweighs a wordmark
-whose extenders are hairlines. 0.4857 was picked by eye and kept.
+| placement | piece |
+|---|---|
+| `thatuglyboy.com` masthead | **0.6193** |
+| `ochre` footer credit | **0.4857** |
+
+Chosen, not derived, and the difference is deliberate: a masthead has room
+around it and a footer credit does not, so the size that reads as balanced in
+the credit leaves a hole in the hero. Both sit below the ascenders — sizing the
+piece so its top meets them gives 0.69, which is near the masthead's value but
+arrived at by accident.
+
+Rules 2 and 3 are identical in both, and rule 3 is written against the wordmark
+rather than the piece **so that changing this number does not silently move the
+spacing too**.
 
 **2. The centre of the piece's left peg sits on the wordmark's meanline.**
 
@@ -102,8 +114,8 @@ file and nothing else, or the peg figure drifts apart again.
 
 | placement | wordmark | piece | gap |
 |---|---|---|---|
-| `thatuglyboy.com` masthead | live text, 0.9531 em of ink | 0.4629 em | 0.0953 em |
-| `ochre` footer credit | 140px PNG | 68px | 14px |
+| `thatuglyboy.com` masthead | live text, 0.9531 em of ink | 0.5903 em (0.6193) | 0.0953 em |
+| `ochre` footer credit | 140px PNG | 68px (0.4857) | 14px |
 
 ## Where they live
 
@@ -114,14 +126,14 @@ file and nothing else, or the peg figure drifts apart again.
 --lockup-inktop: 0.2277;  /* element box top -> ink top, in ems */
 --lockup-mean:   0.4098;  /* meanline, fraction of the ink height */
 --lockup-peg:    0.6014;  /* peg centre, fraction of the piece height */
---lockup-mark-r: 0.4857;  /* piece height, fraction of the ink height */
+--lockup-mark-r: 0.6193;  /* piece height, fraction of the ink height */
 --lockup-gap-r:  0.1000;  /* gap, fraction of the ink height */
 --lockup-box:    1.901;   /* element box width, in ems */
 ```
 
 Everything else in that masthead derives from these. The type is capped at the
 size where the whole lockup still fits its row —
-`box + gap + piece = 1.901 + 0.0953 + 0.4629 = 2.459` ems — so the ratios never
+`box + gap + piece = 1.901 + 0.0953 + 0.5903 = 2.587` ems — so the ratios never
 bend to make room. That cap is what every earlier version was missing: `26vw`
 kept growing after `#app` stopped at 1440, and the piece was squeezed to absorb
 the difference.
@@ -130,8 +142,14 @@ the difference.
 `--mean-r` and `--peg-r`, against a `--wordmark-h` in pixels, because there the
 wordmark is a fixed-size image rather than live type.
 
-Verified at 1100, 1200, 1440 and 1920: piece 0.4857, gap 0.100, peg on the
-meanline to the pixel, at every one.
+Verified at 1100, 1200, 1440 and 1920: the placement's own piece ratio, gap
+0.100, and the peg on the meanline to the pixel, at every one.
+
+Changing the piece's size does **not** need the vertical re-solved by hand. The
+piece is centred in a box whose height does not depend on it, so its peg sits at
+`centre + 0.1014 x ratio x ink` — move the ratio and the correction moves by
+`0.1014 x ink x delta`. Going 0.4857 -> 0.6193 took the slope from 0.09623 to
+0.08332, and that landed on the meanline to the pixel first try.
 
 ## Re-measuring
 

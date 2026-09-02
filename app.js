@@ -74,14 +74,12 @@ function topbar() {
 // in the bar above and gets its own section further down.
 function hero() {
   const c = C();
-  const loop = c.hero.loop.map((s) => `<li>${esc(s)}</li>`).join('');
   return `
     <section class="hero" id="top">
       <div class="wrap">
         <div class="settler" aria-hidden="true"></div>
         <h1 class="wordmark">Ochre</h1>
         <p class="tagline">${esc(c.hero.tagline)}</p>
-        <ul class="loop">${loop}</ul>
         <div class="cta-row">
           ${btn(LINKS.steam, LOGO.steam + esc(c.cta.steam), 'big primary')}
         </div>
@@ -138,14 +136,18 @@ function community() {
   // the name carries its own lang — which also picks the right display face.
   const cards = c.cards.map((s) => btn(
     LINKS.discord[s.key],
-    `<span class="flag">${esc(s.flag)}</span>
-     <span class="name" lang="${esc(s.key)}">${esc(s.name)}</span>`,
+    `${LOGO.discord}
+     <span class="server-txt">
+       <span class="flag">${esc(s.flag)}</span>
+       <span class="name" lang="${esc(s.key)}">${esc(s.name)}</span>
+     </span>`,
     ''
   )).join('');
   return `
     <section class="block" id="community">
       <div class="wrap">
         <h2>${esc(c.title)}</h2>
+        <p class="comm-lead">${esc(c.lead)}</p>
         <div class="servers">${cards}</div>
       </div>
     </section>
