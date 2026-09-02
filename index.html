@@ -435,7 +435,9 @@
   }
 
   /* ============ SCREENS ============ */
-  .shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  /* Three across, two down. Ordered closest-first in content.js, so the grid
+     itself shows the range of distances the game is played at. */
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .shot {
     position: relative;
     aspect-ratio: 16 / 9;
@@ -636,10 +638,17 @@
     .topbar .btn { display: none; }
   }
 
+  /* Two across before dropping to one — at three, a 900px screen renders each
+     frame under 280px and the wide shots stop reading. */
+  @media (max-width: 1020px) {
+    .shots { grid-template-columns: repeat(2, 1fr); }
+  }
+
   @media (max-width: 780px) {
     body { font-size: 17px; }
     .hero { padding: 56px 0 52px; }
-    .systems, .shots { grid-template-columns: 1fr; }
+    .systems { grid-template-columns: 1fr; }
+    .shots { grid-template-columns: 1fr; gap: 16px; }
     section.block { padding: 54px 0; }
     .tagline { font-size: 19px; }
     .brand { font-size: 28px; }

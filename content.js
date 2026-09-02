@@ -83,14 +83,17 @@ const CONTENT = {
     },
 
     // Rendered headless out of the game itself — see
-    // agent_simulation/generate_site_screenshots.py. The caption is the alt
-    // text; it is not drawn, so it can say what the frame actually shows.
+    // agent_simulation/generate_site_screenshots.py. Ordered by zoom, closest
+    // first, so the row reads as a range of distances rather than six views
+    // from the same height. The caption is the alt text; it is not drawn.
     screens: {
       shots: [
-        { src: 'media/screen-1.jpg', alt: 'A settlement at work, with dogs and an entertainer among the gatherers' },
-        { src: 'media/screen-2.jpg', alt: 'A wolf pack in among warriors and their dogs' },
-        { src: 'media/screen-3.jpg', alt: 'Spiders over the faith quarter' },
-        { src: 'media/screen-4.jpg', alt: 'A small camp on the water, seen wide' }
+        { src: 'media/screen-1.jpg', alt: 'Close on a campfire: gatherers, dogs, an entertainer and a priest around the cave' },
+        { src: 'media/screen-2.jpg', alt: 'Spiders coming over the shrines of the faith quarter' },
+        { src: 'media/screen-3.jpg', alt: 'A settlement at work, shelters ringed around the cave' },
+        { src: 'media/screen-4.jpg', alt: 'A wolf pack in among warriors and their dogs' },
+        { src: 'media/screen-5.jpg', alt: 'A small camp on the water, seen wide' },
+        { src: 'media/screen-6.jpg', alt: 'The whole valley: a settlement between mountain slabs' }
       ]
     },
 
@@ -155,10 +158,12 @@ const CONTENT = {
 
     screens: {
       shots: [
-        { src: 'media/screen-1.jpg', alt: 'Un asentamiento trabajando, con perros y un animador entre los recolectores' },
-        { src: 'media/screen-2.jpg', alt: 'Una manada de lobos entre guerreros y sus perros' },
-        { src: 'media/screen-3.jpg', alt: 'Arañas sobre el barrio de la fe' },
-        { src: 'media/screen-4.jpg', alt: 'Un campamento pequeño sobre el agua, en plano abierto' }
+        { src: 'media/screen-1.jpg', alt: 'De cerca en una fogata: recolectores, perros, un animador y un sacerdote junto a la cueva' },
+        { src: 'media/screen-2.jpg', alt: 'Arañas cayendo sobre los santuarios del barrio de la fe' },
+        { src: 'media/screen-3.jpg', alt: 'Un asentamiento trabajando, refugios alrededor de la cueva' },
+        { src: 'media/screen-4.jpg', alt: 'Una manada de lobos entre guerreros y sus perros' },
+        { src: 'media/screen-5.jpg', alt: 'Un campamento pequeño sobre el agua, en plano abierto' },
+        { src: 'media/screen-6.jpg', alt: 'El valle entero: un asentamiento entre lajas de montaña' }
       ]
     },
 

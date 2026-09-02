@@ -77,7 +77,7 @@ is, each named in its own language.
 ## The screenshots are generated, not captured
 
 `agent_simulation/generate_site_screenshots.py` renders them headless — no
-window, no HUD, no cursor. `media/screen-1..4.jpg` are the gallery; `bg-1..4.jpg`
+window, no HUD, no cursor. `media/screen-1..6.jpg` are the gallery; `bg-1..4.jpg`
 are the washes behind the sections. Re-run it and re-copy to change them; do not
 hand-crop a screen capture, because the HUD is in one and this has no HUD in it.
 
@@ -94,6 +94,11 @@ editing it:
   candidate framings and keeps the one with the widest spread of luminance and
   chroma — a decent stand-in for "interesting", since every feature the
   generator makes arrives as a change in colour.
+- **The zoom column is the point of the set.** The six run 2.20 down to 0.55:
+  at the near end you read one agent's class off its sprite, at the far end you
+  read the shape of a map. They are ordered closest-first in `content.js`, so
+  the 3x2 grid shows that range rather than six views from the same height. Six
+  shots at one distance would say the game has one distance.
 - **The cast is mixed on purpose.** A settlement of nothing but settlers is one
   silhouette repeated forty times, so scenes draw a class mix and add divine
   units (dog, entertainer, priest, strategos). Spiders have full art and labels
