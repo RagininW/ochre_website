@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ochre — a roguelite rts</title>
-<meta name="description" content="a society of agents grows, falls, and leaves its genes to the next one." />
+<title>Ochre — a roguelite RTS</title>
+<meta name="description" content="A society of agents grows, falls, and leaves its genes to the next one." />
 <link rel="icon" type="image/png" href="favicon.png">
 
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="ochre" />
-<meta property="og:title" content="ochre — a roguelite rts" />
-<meta property="og:description" content="a society of agents grows, falls, and leaves its genes to the next one." />
+<meta property="og:site_name" content="Ochre" />
+<meta property="og:title" content="Ochre — a roguelite RTS" />
+<meta property="og:description" content="A society of agents grows, falls, and leaves its genes to the next one." />
 <meta property="og:url" content="https://ochre.thatuglyboy.com" />
-<meta name="theme-color" content="#d3c7a0" />
+<meta name="theme-color" content="#e2d5b5" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,52 +52,59 @@
   }
 
   /* ============ TOKENS ============
-     Taken off two plates in assets/ui/menus/, not eyeballed — these two ARE the
-     art direction, and media/tex_maroon.png and media/tex_bone.png are their
-     interiors with the black outline cropped off:
+     Hues come off the game's own plates in assets/ui/; the lightness and chroma
+     of every value are then set in OKLCH, so contrast is a number rather than a
+     guess and the accents can be pushed for life without going muddy.
 
-       option_row.png        #3f2627  the maroon capsule
-       bloodline_banner.png  #c1bea7  the bone capsule
-       stat_card.png         #d2d1b3  bone, one step brighter
-       primary_start_run.png #d8d878  the chartreuse primary
-       pause_primary.png     #e8e0a0  its highlight
+       plate                        sampled          role
+       menus/bloodline_banner.png   L.798 C.032 H101  the paper
+       menus/option_row.png         L.300 C.038 H 17  the maroon capsule
+       primary_start_run.png        L.862 C.119 H109  the chartreuse primary
+       assets.py Lascaux sienna     L.619 C.139 H 43  the accents
+       assets.py Lascaux oxide      L.491 C.129 H 33
 
-     The page itself is bloodline_banner's parchment (media/tex_page.jpg, that
-     crop mirrored into a seamless tile). Everything else is a plate lying ON
-     that sheet: maroon cards, chartreuse and olive buttons, all outlined in
-     ink. Nothing on this page is the same colour as the paper — that is what
-     keeps the capsules readable. */
+     Every pair below was checked against WCAG. Body text on paper is 10.6:1,
+     text on the maroon plates 10.6:1, the section headings 4.4:1 and the loop
+     3.4:1 (both large display sizes, which need 3.0). Chroma is roughly 25-40%
+     above the raw plates — that is the "liveliness", and it is free because
+     OKLCH holds lightness steady while chroma moves, so nothing lost contrast
+     on the way. If you change a value, change L for contrast and C for
+     saturation; they do not interfere.
+
+     The page is a sheet of paper and everything else is a plate lying on it.
+     Nothing may be the same colour as the paper — that is what keeps the
+     plates legible. */
   :root {
     --font-display: 'lingming', 'sable', serif;
     --font-body:    'avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
 
     --ink:        #000000;
-    --paper:      #d3c7a0;   /* the page — bloodline_banner warmed toward ochre */
-    --capsule:    #4a2b2c;   /* maroon plate, a shade up from the raw plate so
-                                the watercolour in it still reads on paper */
-    --capsule-hi: #5c3839;
-    --bone:       #ecdfc4;   /* type on maroon */
-    --olive:      #c3bd94;   /* the recessed / not-yet plate */
-    --lime:       #d8d878;   /* primary_start_run */
-    --lime-hi:    #e8e0a0;   /* pause_primary */
-    --sienna:     #c9663a;   /* Lascaux sienna — the accent on the light page */
-    --oxide:      #9c3f2c;   /* Lascaux oxide — headings */
-    --amber:      #d99031;   /* Lascaux amber, warmed — chips and small marks */
-    --on-paper:   #33191a;   /* type on the page */
-    --muted:      #6b4038;   /* secondary type on the page */
-    --muted-bone: #c4a68c;   /* secondary type on maroon */
+    --paper:      #e2d5b5;   /* L .875 C .045 H  88 */
+    --paper-2:    #d6c8a6;   /* L .835 C .048 H  88 */
+    --capsule:    #4e2524;   /* L .320 C .062 H  22 */
+    --capsule-hi: #643332;   /* L .385 C .070 H  22 */
+    --bone:       #f0e8cc;   /* L .930 C .038 H  95 — type on maroon */
+    --olive:      #c6bf97;   /* L .800 C .055 H 100 — the not-yet plate */
+    --lime:       #dee05f;   /* L .880 C .150 H 110 — primary */
+    --lime-hi:    #f0ef84;   /* L .930 C .130 H 108 */
+    --sienna:     #b65500;   /* L .560 C .150 H  52 — the loop */
+    --oxide:      #aa3527;   /* L .500 C .155 H  30 — headings */
+    --amber:      #e8a127;   /* L .760 C .150 H  75 — chips */
+    --on-paper:   #3b1c17;   /* L .270 C .050 H  30 */
+    --muted:      #7d524a;   /* L .485 C .060 H  32 — secondary on paper */
+    --muted-bone: #c2ae92;   /* L .760 C .045 H  75 — secondary on maroon */
 
     --tex-maroon: url('media/tex_maroon.png');
     --tex-bone:   url('media/tex_bone.png');
     --tex-page:   url('media/tex_page.jpg');
 
     /* The plate: a hard ink offset for the drawn outline, plus a soft bloom
-       underneath so it reads as lying ON the ground rather than printed into
+       underneath so it reads as lying ON the paper rather than printed into
        it. Both, always — the hard edge alone looked like a sticker. */
-    --lift:    5px 5px 0 var(--ink), 8px 11px 18px rgba(36,20,22,.30);
-    --lift-hi: 7px 7px 0 var(--ink), 12px 16px 26px rgba(36,20,22,.38);
-    --lift-sm: 3px 3px 0 var(--ink), 4px 6px 10px rgba(36,20,22,.28);
+    --lift:    5px 5px 0 var(--ink), 8px 11px 18px rgba(59,28,23,.30);
+    --lift-hi: 7px 7px 0 var(--ink), 12px 16px 26px rgba(59,28,23,.38);
+    --lift-sm: 3px 3px 0 var(--ink), 4px 6px 10px rgba(59,28,23,.28);
 
     --gutter: 24px;
     --max: 1180px;
@@ -157,13 +164,28 @@
     background-position: center;
   }
 
+  /* Steam and Discord's own marks, masked so they take the button's text
+     colour instead of shipping brand-coloured art onto a maroon or chartreuse
+     plate. media/discord.svg is the official lockup with its viewBox cropped to
+     the icon, so the "Discord" lettering falls outside the box. */
+  .logo {
+    flex: 0 0 auto;
+    display: inline-block;
+    width: 1.15em; height: 1.15em;
+    background-color: currentColor;
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+  }
+  .logo-steam   { --logo: url('media/steam.svg'); }
+  .logo-discord { --logo: url('media/discord.svg'); width: 1.35em; }
+
   /* ============ BUTTONS ============ */
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
     font-family: var(--font-mono);
     font-size: 15px; font-weight: 700;
     letter-spacing: .06em;
-    text-transform: lowercase;
+    text-transform: none;
     padding: 14px 24px;
     color: var(--bone);
     background-color: var(--capsule);
@@ -201,7 +223,7 @@
      paint left the whole page one colour. What marks it is the `soon` chip and
      the fact that it does not lift or press. */
   .btn.dead {
-    color: #4a4230;
+    color: var(--on-paper);
     background-color: var(--olive);
     background-image: var(--tex-bone);
     background-blend-mode: normal;
@@ -231,7 +253,7 @@
     font-family: var(--font-display);
     font-size: 34px; line-height: 1;
     color: var(--bone);
-    text-transform: lowercase;
+    text-transform: none;
     margin-right: auto;
     text-shadow: 0 2px 0 rgba(0,0,0,.55);
   }
@@ -274,7 +296,7 @@
     background-color: var(--capsule);
     -webkit-mask: url('media/settler.png') center / contain no-repeat;
     mask: url('media/settler.png') center / contain no-repeat;
-    filter: drop-shadow(4px 5px 0 rgba(36,20,22,.28));
+    filter: drop-shadow(4px 5px 0 rgba(59,28,23,.26));
   }
   h1.wordmark {
     font-family: var(--font-display);
@@ -282,12 +304,11 @@
     font-size: clamp(88px, 17vw, 230px);
     line-height: .9;
     letter-spacing: .02em;
-    text-transform: lowercase;
+    text-transform: none;
     margin: 0;
     color: var(--capsule);
-    text-shadow: 0 5px 0 rgba(36,20,22,.22);
+    text-shadow: 0 5px 0 rgba(59,28,23,.20);
   }
-  h1.wordmark .dot { color: var(--sienna); }
   h1.wordmark { color: var(--capsule); }
 
   .tagline {
@@ -306,9 +327,9 @@
     padding: 0; list-style: none;
     font-family: var(--font-display);
     font-size: 30px;
-    text-transform: lowercase;
+    text-transform: none;
     color: var(--sienna);
-    text-shadow: 0 2px 0 rgba(36,20,22,.14);
+    text-shadow: 0 2px 0 rgba(59,28,23,.12);
   }
   .loop li { display: flex; align-items: center; gap: 18px; }
   .loop li:not(:last-child)::after { content: "→"; color: var(--muted); opacity: .6; font-size: 22px; }
@@ -328,17 +349,17 @@
 
   /* ============ SECTIONS ============ */
   section.block { padding: 76px 0; border-bottom: 3px solid var(--ink); }
-  section.block:nth-of-type(even) { background: rgba(36,20,22,.055); }
+  section.block:nth-of-type(even) { background: rgba(59,28,23,.055); }
   h2 {
     font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(38px, 6vw, 58px);
     line-height: 1;
-    text-transform: lowercase;
+    text-transform: none;
     color: var(--oxide);
     margin: 0 0 40px;
     text-align: center;
-    text-shadow: 0 3px 0 rgba(51,25,26,.14);
+    text-shadow: 0 3px 0 rgba(59,28,23,.14);
   }
 
   /* ============ SCREENS ============ */
@@ -353,7 +374,7 @@
   .shot figcaption {
     font-family: var(--font-display);
     font-size: 28px;
-    text-transform: lowercase;
+    text-transform: none;
     color: var(--bone);
     opacity: .78;
     text-shadow: 0 2px 0 rgba(0,0,0,.45);
@@ -376,7 +397,7 @@
   .sys h3 {
     font-family: var(--font-display);
     font-weight: 400; font-size: 30px; line-height: 1.05;
-    text-transform: lowercase;
+    text-transform: none;
     color: var(--bone);
     margin: 0 0 8px;
     text-shadow: 0 2px 0 rgba(0,0,0,.45);
@@ -389,13 +410,13 @@
   .servers .flag {
     font-family: var(--font-mono);
     font-size: 11px; font-weight: 500;
-    letter-spacing: .18em; text-transform: uppercase;
-    opacity: .7;
+    letter-spacing: .14em;
+    opacity: .75;
   }
   .servers .name {
     font-family: var(--font-display);
     font-size: 32px; line-height: 1;
-    text-transform: lowercase;
+    text-transform: none;
     letter-spacing: 0;
   }
 
@@ -411,7 +432,7 @@
   .made {
     font-family: var(--font-mono);
     font-size: 12px; font-weight: 500;
-    letter-spacing: .2em; text-transform: uppercase;
+    letter-spacing: .16em;
     color: var(--muted-bone);
     margin-bottom: 18px;
   }
@@ -426,7 +447,7 @@
      height) rather than on the boxes — centring the boxes is what made the
      puzzle piece look like it was floating off on its own. */
   .tub {
-    display: inline-flex; align-items: center; gap: 14px;
+    display: inline-flex; align-items: center; gap: var(--tub-gap);
     color: var(--bone);
     -webkit-tap-highlight-color: transparent;
     transition: color .15s, transform .15s;
@@ -436,18 +457,34 @@
     background-color: currentColor;
     filter: drop-shadow(0 3px 0 rgba(0,0,0,.5));
   }
-  /* Sized off the letters, not the boxes. Both images are tight-cropped to
-     their ink and both centre their ink within 0.4% of the box, so `center`
-     already aligns them — what looked broken was scale: the wordmark's
-     x-height is 14.6% of its box (the rest is those hairline extenders), so a
-     46px puzzle piece stood 2.7x the height of the words beside it.
-     Order and scale follow the main site's own masthead: wordmark first, then
-     the puzzle piece to its right, the piece roughly half the wordmark's box.
-     A small piece set beside those extenders just looked lost next to them.
+  /* Sized and aligned off the ARTWORK, not the boxes.
+
+     Both PNGs are tight-cropped to their ink. The wordmark's x-height band sits
+     at 0.496 of its box — dead centre — so the words need no correction. The
+     puzzle piece does: its left peg spans rows 73..117 of 160, centred at
+     0.594 of the mark, which is 9.38% BELOW the mark's own box centre. So
+     centring the two boxes puts the peg low against the words.
+
+     --peg-drop is that measured 0.0938. The mark is shifted up by exactly that
+     fraction of its own height, which lands the centre of the left peg on the
+     centre of "that ugly boy". Both numbers come from the alpha channel; if
+     either PNG is redrawn, re-measure rather than nudging this by eye.
+
+     Scale: the wordmark's x-height is only 14.6% of its box (the rest is those
+     hairline extenders), so a mark sized to the box towers over the words —
+     .mark is kept near half the wordmark's height. Order and proportion follow
+     the main site's own masthead: wordmark first, piece to its right.
+
      Keep 1.885:1 on .name — that is the PNG's aspect, and any other ratio
-     letterboxes inside `contain` and shifts the words off the piece. */
+     letterboxes inside `contain` and slides the words off the piece. */
+  .tub {
+    --mark: 68px;
+    --peg-drop: 0.0938;
+    --tub-gap: 14px;
+  }
   .tub .mark {
-    width: 68px; height: 68px;
+    width: var(--mark); height: var(--mark);
+    transform: translateY(calc(var(--mark) * var(--peg-drop) * -1));
     -webkit-mask: url('media/tub_mark.png') center / contain no-repeat;
     mask: url('media/tub_mark.png') center / contain no-repeat;
   }
@@ -462,13 +499,22 @@
     display: flex; justify-content: center; gap: 26px;
     font-family: var(--font-mono);
     font-size: 12px; font-weight: 500;
-    letter-spacing: .16em; text-transform: uppercase;
+    letter-spacing: .1em;
     color: var(--muted-bone);
   }
   .foot-links a { border-bottom: 2px solid transparent; padding-bottom: 2px; transition: color .15s, border-color .15s; }
   .foot-links a:hover { color: var(--lime); border-bottom-color: var(--lime); }
 
   /* ============ RESPONSIVE ============ */
+  /* The bar carries brand + two CTAs + the language switch. Below this the
+     four no longer fit and the flex row clipped the ES button off the right
+     edge rather than wrapping. The CTAs are the ones that go: Steam is the
+     hero's only call to action and Discord has its own section, so nothing is
+     lost — where the language switch has nowhere else to live. */
+  @media (max-width: 860px) {
+    .topbar .btn { display: none; }
+  }
+
   @media (max-width: 780px) {
     body { font-size: 17px; }
     .hero { padding: 56px 0 52px; }
@@ -480,8 +526,8 @@
     .brand { font-size: 28px; }
     .cta-row .btn, .servers .btn { width: 100%; }
     .settler { width: 100px; height: 107px; }
+    .tub { --mark: 54px; --tub-gap: 11px; }
     .tub .name { width: 208px; height: 110px; }
-    .tub .mark { width: 54px; height: 54px; }
   }
   @media (max-width: 420px) {
     .topbar .wrap { gap: 10px; }

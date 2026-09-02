@@ -28,8 +28,15 @@ function esc(s) {
   ));
 }
 
+// The official marks, masked so they take the button's own text colour rather
+// than shipping brand-coloured art onto a maroon or chartreuse plate.
+const LOGO = {
+  steam: '<span class="logo logo-steam" aria-hidden="true"></span>',
+  discord: '<span class="logo logo-discord" aria-hidden="true"></span>'
+};
+
 // Every link on this page is one of these plates. A url that isn't live yet
-// renders flat and unpressable with its own "soon" chip, at full size — the
+// renders as a flat olive plate with its own "Soon" chip, at full size — the
 // gap is meant to be visible, not hidden behind a dimmed style.
 function btn(href, label, cls) {
   const c = `btn ${cls || ''}`.trim();
@@ -41,63 +48,51 @@ function btn(href, label, cls) {
   </span>`;
 }
 
-// thatuglyboy.com reads ?lang= and strips it — carry the choice back over.
+// thatuglyboy.com reads ?lang= and strips it — carry the choice over as the
+// fallback for when the shared cookie is blocked.
 const siteUrl = () => `${LINKS.site}/?lang=${LANG}`;
 
 // ------------------ SECTIONS ------------------
 function topbar() {
+  const c = C();
   return `
     <header class="topbar">
       <div class="wrap">
-        <a class="brand" href="#top">ochre<span class="dot">.</span></a>
-        ${btn(LINKS.steam, esc(C().cta.steamShort), 'sm primary')}
-        ${btn(LINKS.discord[LANG], esc(C().cta.discord), 'sm')}
+        <a class="brand" href="#top">Ochre</a>
+        ${btn(LINKS.steam, LOGO.steam + esc(c.cta.steamShort), 'sm primary')}
+        ${btn(LINKS.discord[LANG], LOGO.discord + esc(c.cta.discord), 'sm')}
         <div class="lang">
-          <button class="${LANG === 'en' ? 'on' : ''}" data-lang="en">en</button>
-          <button class="${LANG === 'es' ? 'on' : ''}" data-lang="es">es</button>
+          <button class="${LANG === 'en' ? 'on' : ''}" data-lang="en">EN</button>
+          <button class="${LANG === 'es' ? 'on' : ''}" data-lang="es">ES</button>
         </div>
       </div>
     </header>
   `;
 }
 
+// One call to action here, not two. The hero asks for the wishlist; Discord is
+// in the bar above and gets its own section further down.
 function hero() {
-  const c = C().hero;
-  const loop = c.loop.map((s) => `<li>${esc(s)}</li>`).join('');
+  const c = C();
+  const loop = c.hero.loop.map((s) => `<li>${esc(s)}</li>`).join('');
   return `
     <section class="hero" id="top">
       <div class="wrap">
         <div class="settler" aria-hidden="true"></div>
-        <h1 class="wordmark">ochre<span class="dot">.</span></h1>
-        <p class="tagline">${esc(c.tagline)}</p>
+        <h1 class="wordmark">Ochre</h1>
+        <p class="tagline">${esc(c.hero.tagline)}</p>
         <ul class="loop">${loop}</ul>
         <div class="cta-row">
-          ${btn(LINKS.steam, esc(C().cta.steam), 'big primary')}
-          ${btn(LINKS.discord[LANG], esc(C().cta.discord), 'big')}
+          ${btn(LINKS.steam, LOGO.steam + esc(c.cta.steam), 'big primary')}
         </div>
-        <p class="meta">${esc(c.meta)}</p>
+        <p class="meta">${esc(c.hero.meta)}</p>
       </div>
     </section>
   `;
 }
 
-function screens() {
-  const c = C().screens;
-  const shots = c.shots.map((cap) => `
-    <figure class="shot"><figcaption>${esc(cap)}</figcaption></figure>
-  `).join('');
-  return `
-    <section class="block" id="screens">
-      <div class="wrap">
-        <h2>${esc(c.title)}</h2>
-        <div class="shots">${shots}</div>
-      </div>
-    </section>
-  `;
-}
-
-function systems() {
-  const c = C().systems;
+function about() {
+  const c = C().about;
   const items = c.items.map((f) => `
     <article class="sys">
       <div class="ic" style="--src:url('${esc(f.icon)}')" aria-hidden="true"></div>
@@ -108,10 +103,26 @@ function systems() {
     </article>
   `).join('');
   return `
-    <section class="block" id="systems">
+    <section class="block" id="about">
       <div class="wrap">
         <h2>${esc(c.title)}</h2>
         <div class="systems">${items}</div>
+      </div>
+    </section>
+  `;
+}
+
+// No heading: four captioned frames read as a gallery on their own, and the
+// word "Screens" over them was the label of a thing already labelled.
+function screens() {
+  const c = C().screens;
+  const shots = c.shots.map((cap) => `
+    <figure class="shot"><figcaption>${esc(cap)}</figcaption></figure>
+  `).join('');
+  return `
+    <section class="block" id="screens">
+      <div class="wrap">
+        <div class="shots">${shots}</div>
       </div>
     </section>
   `;
@@ -149,7 +160,7 @@ function footer() {
           <span class="mark" aria-hidden="true"></span>
         </a>
         <div class="foot-links">
-          <span>ochre ${esc(c.rights)}</span>
+          <span>Ochre ${esc(c.rights)}</span>
           <a href="${esc(LINKS.contact[LANG] || LINKS.contact.en)}">${esc(c.contact)}</a>
         </div>
       </div>
@@ -165,7 +176,7 @@ function render() {
   const desc = document.querySelector('meta[name="description"]');
   if (desc) desc.setAttribute('content', c.meta.description);
 
-  app.innerHTML = [topbar(), hero(), screens(), systems(), community(), footer()].join('');
+  app.innerHTML = [topbar(), hero(), about(), screens(), community(), footer()].join('');
 }
 
 app.addEventListener('click', (e) => {

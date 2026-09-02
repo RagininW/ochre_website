@@ -2,9 +2,11 @@
 // Separate Worker from ../main-site and ../contact so all three deploy
 // independently and none can break the others.
 {
-  // must match the Worker in Cloudflare, or a deploy creates a second,
-  // unrouted Worker instead of updating the live one
-  "name": "ochre",
+  // Must match the Worker in Cloudflare, or a deploy creates a second,
+  // unrouted Worker instead of updating the live one. Cloudflare derives it
+  // from the repo name (ochre_website -> ochre-website) and opens a PR to
+  // correct this file if the two disagree.
+  "name": "ochre-website",
   "compatibility_date": "2026-07-01",
   "assets": {
     "directory": "."
