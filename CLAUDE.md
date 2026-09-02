@@ -212,16 +212,22 @@ wordmark's box height. The main site now carries the same relationship, both the
 `.tub .name` must keep the PNG's 1.885:1 aspect. Any other ratio letterboxes
 inside `contain` and slides the words off the piece.
 
-The tab icon is that same settler, in the site's maroon on its own paper — this
-site's own mark, where `../main-site` and `../contact` use the house puzzle
-piece. Drawn on a background rather than left transparent: a favicon is read at
-16px and a bare silhouette loses its shape against a dark browser theme.
+The tab icon is that same settler, transparent — this site's own mark, where
+`../main-site` and `../contact` use the house puzzle piece.
 
-`favicon-16/32/48.png` are drawn tighter in their frame than `favicon.png`,
-and are separate files rather than one 512 left to the browser to shrink — at
-16px the figure's arms are a pixel wide and a downscale of the large one loses
-them. The `?v=` on every icon link is not decoration: browsers hold a favicon
-well past a hard reload, so a change without it looks like it did nothing.
+**It is not the site's maroon.** A transparent icon sits on whatever the tab
+strip happens to be, and `#581b1f` measures 13:1 against white chrome but
+**1.2:1** against Chrome's dark strip — invisible for half of viewers. The fill
+is Lascaux sienna lifted (`#cc5e36`) until it clears 4:1 against both.
+
+`favicon-16/32/48.png` are separate files rather than one 512 left to the
+browser to shrink: at 16px the figure's arms are about a pixel wide, and
+downsampling a large render keeps them as grey where a browser's own resize
+drops them. `apple-touch-icon.png` keeps a paper background because iOS ignores
+transparency there and composites on black.
+
+The `?v=` on every icon link is not decoration: browsers hold a favicon well
+past a hard reload, so a change without it looks like it did nothing.
 
 `media/settler.png` is `assets/unit1.png` — the base agent, and the silhouette
 the house mark is drawn from. The source is only **88x94**, so it is upscaled 5x
