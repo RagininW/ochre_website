@@ -223,6 +223,7 @@
     background-image: var(--tex-maroon);
     cursor: pointer;
     white-space: nowrap;
+    position: relative;          /* the status tag hangs off this */
     transition: transform .1s, box-shadow .1s, background-color .12s;
   }
   .btn:hover {
@@ -260,14 +261,54 @@
     background-blend-mode: normal;
     cursor: default; pointer-events: none;
   }
+  /* A tag pinned to the plate's corner, not a chip sitting inside it — the
+     thing a sale sticker does on a shelf. It hangs over the plate's own
+     outline, so it reads as stuck on afterwards, which is what a status is:
+     the plate is the offer, the tag is a note about it.
+
+     Uppercase and rotated, both deliberately against the rest of this page.
+     It is a stamp rather than a label, and being the exception is what makes
+     it read as one.
+
+     Out of flow, which also re-centres the label underneath: as an inline chip
+     it was part of the flex row and pushed every button's text off-centre.
+
+     The offsets clear the label VERTICALLY rather than horizontally. Pushing
+     the tag sideways does not help: it is anchored to the button's right edge,
+     so widening the button moves the tag along with it. Lifting it until its
+     bottom sits above the label's top does, and then the horizontal overlap
+     stops mattering — a sticker over a corner, not over the writing. */
   .btn .soon {
+    position: absolute;
+    top: -28px; right: -16px;
+    z-index: 2;
+    transform: rotate(-7deg);
+    font-family: var(--font-mono);
     font-size: 11px; font-weight: 700;
-    padding: 3px 7px;
-    border-radius: 5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 6px 11px;
     color: var(--ink);
     background: var(--amber);
-    box-shadow: inset 0 0 0 2px rgba(0,0,0,.55);
+    border: 3px solid var(--ink);
+    border-radius: 7px;
+    box-shadow: 3px 3px 0 var(--ink);
   }
+  /* The bar's buttons are half the size, so the tag comes down with them.
+
+     Lifting one clear needs somewhere to go, and the bar had only 13px above
+     the button — a raised tag would have poked past the top of the page. The
+     bar's top padding pays for that headroom; see `.topbar .wrap`. */
+  .btn.sm .soon {
+    top: -22px; right: -12px;
+    font-size: 9px;
+    letter-spacing: .12em;
+    padding: 4px 7px;
+    border-width: 2px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+  .btn.big .soon { font-size: 12px; padding: 7px 13px; }
 
   /* ============ TOP BAR ============ */
   .topbar {
@@ -278,7 +319,10 @@
   }
   .topbar .wrap {
     display: flex; align-items: center; gap: 14px;
-    padding: 13px var(--gutter);
+    /* Asymmetric on purpose: the status tags on the bar's buttons hang above
+       them, and 13px of headroom was not enough to lift one clear of its own
+       label without it leaving the top of the page. */
+    padding: 24px var(--gutter) 13px;
   }
   .brand {
     font-family: var(--font-display);
@@ -506,9 +550,8 @@
   }
   /* The plate is a grid, not a row of three loose things.
 
-       col 1   the mark, spanning and matching both rows
-       row 1   the region label
-       row 2   the name
+       col 1   the region label over the name
+       col 2   the mark, spanning and matching both rows, at the right edge
 
      Sorted by importance, not by reading order: the name is what the plate is
      for and gets its own row, the region is a label about it and sits above.
@@ -520,10 +563,9 @@
      and the other up, so the pair reads as one block whatever either one's
      line-height does. */
   .servers .btn {
-    position: relative;          /* the tag hangs off this */
     width: 100%;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
     column-gap: 20px;
     row-gap: 6px;
@@ -536,13 +578,14 @@
      ratio makes it square from that. A fixed em would need re-tuning every
      time the label or the name changes size. */
   .servers .logo {
-    grid-area: 1 / 1 / 3 / 2;
+    grid-area: 1 / 2 / 3 / 3;
+    justify-self: end;
     align-self: stretch;
     width: auto; height: auto;
     aspect-ratio: 1;
   }
   .servers .flag {
-    grid-area: 1 / 2 / 2 / 3;
+    grid-area: 1 / 1 / 2 / 2;
     align-self: end;
     font-family: var(--font-mono);
     font-size: 12px; font-weight: 500;
@@ -551,36 +594,21 @@
     opacity: .75;
   }
   .servers .name {
-    grid-area: 2 / 2 / 3 / 3;
+    grid-area: 2 / 1 / 3 / 2;
     align-self: start;
     font-family: var(--font-display);
     font-size: 34px; line-height: 1;
     letter-spacing: 0;
   }
-  /* A tag pinned to the corner rather than a chip sitting inside the plate —
-     the same thing a sale sticker does on a shelf. Out of the grid and hung
-     over the plate's own outline, so it reads as stuck on afterwards, which is
-     what a status is: the plate is the server, the tag is a note about it.
-
-     Uppercase and rotated, both deliberately against the rest of the page —
-     it is a stamp, not a label, and the exception is what makes it read as
-     one. Its own ink outline and offset shadow so it sits above the plate's. */
+  /* The plates are the biggest of the three, so their tag runs a size up — and
+     it hangs off the LEFT corner, because on these the mark is at the right
+     and a top-right tag lands on top of it. Mirrored rotation too, so it still
+     leans away from the plate rather than into it. */
   .servers .btn .soon {
-    position: absolute;
-    top: -13px; right: -13px;
-    z-index: 2;
-    transform: rotate(-7deg);
-    font-family: var(--font-mono);
-    font-size: 12px; font-weight: 700;
-    letter-spacing: .14em;
-    text-transform: uppercase;
+    top: -28px; right: auto; left: -16px;
+    transform: rotate(7deg);
+    font-size: 12px;
     padding: 7px 13px;
-    color: var(--ink);
-    background: var(--amber);
-    border: 3px solid var(--ink);
-    border-radius: 7px;
-    box-shadow: 3px 3px 0 var(--ink);
-    opacity: 1;
   }
 
   /* ============ FOOTER ============
