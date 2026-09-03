@@ -545,7 +545,15 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
-    max-width: 760px;
+    /* Sized off the slack, not by eye. Measured at 760: each plate was 368
+       wide against 223 of content — padding, the widest of label/name, the
+       column gap, the mark — so 145px of it was empty. This halves that:
+       (223 + 73) x 2 + 24 = 616.
+
+       Still `1fr` rather than `auto`, so both plates stay the same width. Let
+       them shrink-wrap and "English" and "Español" would come out different
+       sizes, which is the one thing this pair must not do. */
+    max-width: 616px;
     margin: 0 auto;
   }
   /* The plate is a grid, not a row of three loose things.
