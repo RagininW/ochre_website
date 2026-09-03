@@ -7,7 +7,8 @@
 // Change one, change all three, or the sites disagree about the language.
 //
 // Why a cookie and not localStorage: localStorage is keyed by *origin*, so
-// thatuglyboy.com, ochre.thatuglyboy.com and contact.thatuglyboy.com each get
+// thatuglyboy.com, carvedinstone.thatuglyboy.com and
+// contact.thatuglyboy.com each get
 // their own private box and none of them can read the others'. A cookie is
 // keyed by *domain*, and one written against `.thatuglyboy.com` is sent to
 // every host under it. That is the only client-side store the three sites

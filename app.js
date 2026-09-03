@@ -1,5 +1,5 @@
 // ============================================================
-// ochre.thatuglyboy.com — renderer
+// carvedinstone.thatuglyboy.com — renderer
 //
 // One page, two languages, no build step. All copy and every outbound link
 // live in content.js; this file only decides the language and draws.

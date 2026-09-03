@@ -1,7 +1,8 @@
 # The lockup
 
 "that ugly boy" set beside the puzzle piece. It is the masthead on
-`thatuglyboy.com` and the credit at the foot of `ochre.thatuglyboy.com`, and it
+`thatuglyboy.com` and the credit at the foot of
+`carvedinstone.thatuglyboy.com`, and it
 will appear on every game site after this one.
 
 The two placements share rules 2 and 3 exactly and differ only in the piece's
@@ -31,7 +32,7 @@ is per-placement.**
 | placement | piece |
 |---|---|
 | `thatuglyboy.com` masthead | **0.6193** |
-| `ochre` footer credit | **0.4857** |
+| Carved in Stone footer credit | **0.4857** |
 
 Chosen, not derived, and the difference is deliberate: a masthead has room
 around it and a footer credit does not, so the size that reads as balanced in
@@ -72,7 +73,7 @@ the rest follows.
 
 ### `ugly_boy`, set to "that ugly boy"
 
-**No full stop.** The masthead carried one and the Ochre artwork did not, which
+**No full stop.** The masthead carried one and the game site's artwork did not, which
 is why the two lockups measured differently for a while. It is gone from both.
 
 Read off the live face with canvas metrics and a baseline-aligned probe, at
@@ -88,7 +89,7 @@ Read off the live face with canvas metrics and a baseline-aligned probe, at
 | x-height | 0.1563 em | tiny; the extenders run about six times it |
 | baseline | 0.7746 em | below the box top |
 
-Ochre's PNG measures its meanline at **0.4154** rather than 0.4098 — a browser
+Carved in Stone's PNG measures its meanline at **0.4154** rather than 0.4098 — a browser
 reads the x-height off the glyph outline, a rasteriser off thresholded pixels.
 Use each renderer's own figure for the thing it renders. The two look identical.
 
@@ -115,7 +116,7 @@ file and nothing else, or the peg figure drifts apart again.
 | placement | wordmark | piece | gap |
 |---|---|---|---|
 | `thatuglyboy.com` masthead | live text, 0.9531 em of ink | 0.5903 em (0.6193) | 0.0953 em |
-| `ochre` footer credit | 140px PNG | 68px (0.4857) | 14px |
+| Carved in Stone footer credit | 140px PNG | 68px (0.4857) | 14px |
 
 ## Where they live
 

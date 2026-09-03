@@ -1,4 +1,4 @@
-# ochre.thatuglyboy.com — Carved in Stone
+# carvedinstone.thatuglyboy.com — Carved in Stone
 
 Single-page site for **Carved in Stone**, the roguelite RTS in
 `D:\Documentos\Proyectos\Godot\agent_simulation`. Static, no build step, no
@@ -8,11 +8,15 @@ The game has been *Agent RTS*, *Age of Ages*, *Ochre* and now **Carved in
 Stone**. Nothing carries an old name except the settings-file fallback chain in
 `settings_manager.py`, which is deliberate.
 
-**The hostname, the repo and the Worker are all still `ochre`** —
-`ochre.thatuglyboy.com`, `RagininW/ochre_website`, Worker `ochre-website`.
-Renaming those means new DNS, a new custom domain and a repo rename in GitHub,
-which is a deploy-time decision rather than a code one. Until someone makes it,
-the URL and the title simply differ; nothing is broken by that.
+**The hostname is `carvedinstone.thatuglyboy.com` now.** The folder, the repo
+and the Worker are still `ochre` / `RagininW/ochre_website` / `ochre-website`,
+and can stay that way — the hostname is the only one of the four a visitor sees,
+and renaming the others costs a repo rename and a Worker rebuild for no visible
+gain.
+
+**Cloudflare needs the new custom domain added to the `ochre-website` Worker**
+before that hostname resolves. Adding it does not remove the old one; leaving
+both attached is the easy way to keep any shared link working.
 
 ## Not deployed yet
 
@@ -22,7 +26,7 @@ Repo: `github.com/RagininW/ochre_website`. Before the first deploy:
    Cloudflare derives that name from the repo. Any other
    name deploys a phantom Worker with no custom domains: every build goes green
    and the live site never changes.
-2. Add the custom domain `ochre.thatuglyboy.com` to it.
+2. Add the custom domain `carvedinstone.thatuglyboy.com` to it.
 3. Connect the repo to Workers Builds, the way `../contact` is. Push to `main`
    then ships to production.
 
