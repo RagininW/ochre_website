@@ -32,7 +32,7 @@ is per-placement.**
 | placement | piece |
 |---|---|
 | `thatuglyboy.com` masthead | **0.6193** |
-| Carved in Stone footer credit | **0.4857** |
+| Cavernary footer credit | **0.4857** |
 
 Chosen, not derived, and the difference is deliberate: a masthead has room
 around it and a footer credit does not, so the size that reads as balanced in
@@ -89,7 +89,7 @@ Read off the live face with canvas metrics and a baseline-aligned probe, at
 | x-height | 0.1563 em | tiny; the extenders run about six times it |
 | baseline | 0.7746 em | below the box top |
 
-Carved in Stone's PNG measures its meanline at **0.4154** rather than 0.4098 — a browser
+Cavernary's PNG measures its meanline at **0.4154** rather than 0.4098 — a browser
 reads the x-height off the glyph outline, a rasteriser off thresholded pixels.
 Use each renderer's own figure for the thing it renders. The two look identical.
 
@@ -116,7 +116,7 @@ file and nothing else, or the peg figure drifts apart again.
 | placement | wordmark | piece | gap |
 |---|---|---|---|
 | `thatuglyboy.com` masthead | live text, 0.9531 em of ink | 0.5903 em (0.6193) | 0.0953 em |
-| Carved in Stone footer credit | 140px PNG | 68px (0.4857) | 14px |
+| Cavernary footer credit | 140px PNG | 68px (0.4857) | 14px |
 
 ## Where they live
 

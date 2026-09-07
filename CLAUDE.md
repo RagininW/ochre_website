@@ -1,6 +1,6 @@
-# carvedinstone.thatuglyboy.com — Carved in Stone
+# carvedinstone.thatuglyboy.com — Cavernary
 
-Single-page site for **Carved in Stone**, the roguelite RTS in
+Single-page site for **Cavernary**, the roguelite RTS in
 `D:\Documentos\Proyectos\Godot\agent_simulation`. Static, no build step, no
 dependencies. Same family as `../main-site` and `../contact`, its own Worker.
 
