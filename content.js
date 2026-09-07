@@ -41,11 +41,11 @@ const CONTENT = {
   en: {
     meta: {
       title: 'Cavernary — a roguelite RTS',
-      description: 'A society of agents grows, falls, and leaves its genes to the next one.'
+      description: 'Guide a dawning civilization through the beginnings of humanity. Face the perils and overcome nature.'
     },
 
     hero: {
-      tagline: 'A society of agents grows, falls, and leaves its genes to the next one.'
+      tagline: 'Guide a dawning civilization through the beginnings of humanity. Face the perils and overcome nature.'
     },
 
     cta: {
@@ -60,23 +60,23 @@ const CONTENT = {
       items: [
         {
           icon: 'media/unit.png',
-          name: 'Agents, not units',
-          text: 'They forage, build, rest and pick fights on their own judgement.'
+          name: 'Guide your tribe',
+          text: 'Forage, build, research and train your units to survive nature.'
         },
         {
           icon: 'media/genes.png',
-          name: 'Genes outlive the run',
-          text: 'Every birth is a permanent upgrade for every society after it.'
+          name: 'Your descendants grow stronger ',
+          text: 'Every time your tribe fails, they inherit permanent strength to their offspring.'
         },
         {
           icon: 'media/wolf.png',
-          name: 'The wolves hold the caves',
-          text: 'Pressure comes off the map, not a difficulty clock. Noise wakes it.'
+          name: 'Face nature at it\'s worst',
+          text: 'Many enemies will oppose your growth and will try to hunt you. Use your tools and skills to defeat them.'
         },
         {
           icon: 'media/knowledge.png',
           name: 'A written legacy',
-          text: 'Inscribe one technology and keep it forever. Sixty-five to choose from.'
+          text: 'Let your knowledge be useful for future generations by inscribing acquired technologies.'
         }
       ]
     },
@@ -116,11 +116,11 @@ const CONTENT = {
   es: {
     meta: {
       title: 'Cavernary — un RTS roguelite',
-      description: 'Una sociedad de agentes crece, cae y le deja sus genes a la siguiente.'
+      description: 'Guía a una civilización naciente a través de sus inicios. Enfrenta el peligro y supera a la naturaleza.'
     },
 
     hero: {
-      tagline: 'Una sociedad de agentes crece, cae y le deja sus genes a la siguiente.'
+      tagline: 'Guía a una civilización naciente a través de sus inicios. Enfrenta el peligro y supera a la naturaleza.'
     },
 
     cta: {
@@ -135,23 +135,23 @@ const CONTENT = {
       items: [
         {
           icon: 'media/unit.png',
-          name: 'Agentes, no unidades',
-          text: 'Recolectan, construyen, descansan y pelean por criterio propio.'
+          name: 'Guía a tu tribu',
+          text: 'Junta recursos, contruye edificos y entrena a tus unidades para sobrevivir la naturaleza.'
         },
         {
           icon: 'media/genes.png',
-          name: 'Los genes sobreviven',
-          text: 'Cada nacimiento es una mejora permanente para toda sociedad posterior.'
+          name: 'Tus descendientes serán más fuertes',
+          text: 'Cada vez que tu tribu cae, le heredan su fuerza a sus hijos.'
         },
         {
           icon: 'media/wolf.png',
-          name: 'Los lobos tienen las cuevas',
-          text: 'La presión sale del mapa, no de un reloj. El ruido la despierta.'
+          name: 'Enfrenta a una naturaleza despiadada',
+          text: 'Muchos enemigos se oponen al desarrollo de tu civilización. Usa tus herramientas y habilidades para vencerlos.'
         },
         {
           icon: 'media/knowledge.png',
           name: 'Un legado escrito',
-          text: 'Inscribe una tecnología y consérvala para siempre. Hay sesenta y cinco.'
+          text: 'Que tu conocimiento le sea útil a las futuras generaciones. Inscribe las tecnologías adquiridas para tus descendientes.'
         }
       ]
     },
