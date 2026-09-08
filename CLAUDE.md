@@ -1,6 +1,6 @@
-# carvedinstone.thatuglyboy.com — Cavernary
+# carvedinstone.thatuglyboy.com — Mammoth
 
-Single-page site for **Cavernary**, the roguelite RTS in
+Single-page site for **Mammoth**, the roguelite RTS in
 `D:\Documentos\Proyectos\Godot\agent_simulation`. Static, no build step, no
 dependencies. Same family as `../main-site` and `../contact`, its own Worker.
 

@@ -1,12 +1,12 @@
 // ============================================================
-// Cavernary — all copy and every outbound link
+// Mammoth — all copy and every outbound link
 //
 // A plain script, not a fetched .json, on purpose: the main site's
 // JSON-parse failures are silent (it falls back to a stale inline copy and
 // the edit looks like it did nothing). A syntax error here throws in the
 // console and the page stops, which is the failure mode worth having.
 //
-// CASING: game sites use regular casing — "Cavernary", "Wishlist on
+// CASING: game sites use regular casing — "Mammoth", "Wishlist on
 // Steam", "About". That is the opposite of thatuglyboy.com, which is lowercase
 // throughout. Do not "fix" one to match the other; the split is deliberate,
 // and there is no text-transform on this page enforcing it, so the strings
@@ -40,7 +40,7 @@ const LINKS = {
 const CONTENT = {
   en: {
     meta: {
-      title: 'Cavernary — a roguelite RTS',
+      title: 'Mammoth — a roguelite RTS',
       description: 'Guide a dawning civilization through the beginnings of humanity. Face the perils and overcome nature.'
     },
 
@@ -115,7 +115,7 @@ const CONTENT = {
 
   es: {
     meta: {
-      title: 'Cavernary — un RTS roguelite',
+      title: 'Mammoth — un RTS roguelite',
       description: 'Guía a una civilización naciente a través de sus inicios. Enfrenta el peligro y supera a la naturaleza.'
     },
 
