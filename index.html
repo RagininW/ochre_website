@@ -395,9 +395,16 @@
     text-transform: none;
     margin: 0;
     color: var(--capsule);
-    text-shadow: 0 5px 0 rgba(59,28,23,.20);
+    /* The same 3px ink outline every plate on the page wears. A text stroke is
+       centred on the glyph edge, so `paint-order: stroke fill` lays the fill
+       over its inner half and what shows is the outer half: 0.036em is ~6px at
+       the 166px cap, 3px visible. In ems so it thins with the type on a phone
+       rather than eating the counters at 36px. The shadow was 0 5px; against
+       a hard black edge it read as a second outline, so it steps out to match. */
+    -webkit-text-stroke: .036em var(--ink);
+    paint-order: stroke fill;
+    text-shadow: 0 6px 0 rgba(59,28,23,.22);
   }
-  h1.wordmark { color: var(--capsule); }
 
   .tagline {
     margin: 22px auto 0;
