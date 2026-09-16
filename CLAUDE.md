@@ -261,17 +261,11 @@ headroom and the file is a quarter of the original's 767 KB. It is placed as an
 flatten both to one colour. The same file, inset on a 512 square, is the game's
 cover in `../main-site/covers/games/mammoth.png`.
 
-Two units stand with it — `media/unit-settler.png` and `media/unit-warrior.png`
-are `assets/unit1.png` and `assets/warrior.png` untouched, at 88x94. They are
-drawn at 0.27 of the mammoth's height: a person is small beside a mammoth, and
-that scale is the whole sentence the mark has to say. One stands clear of the
-tusk and one under the trunk, both facing the animal.
-
-The pocket under the trunk is measured off the alpha, not eyeballed: between
-0.13 and 0.30 of the width the mammoth's ink stops at 0.69 of its height, so a
-unit whose head is at 0.73 stands under it without touching. Every offset in
-`.herd` is a fraction of `--mh`, so the phone breakpoint resizes the whole group
-with one number. Re-measure if the mammoth is redrawn.
+It stands alone. Two units (`unit1.png`, `warrior.png`) stood beside it at
+0.27 of its height for a while, one under the trunk in a pocket measured off
+the alpha — and at that size they were two dark flecks under the wordmark,
+noise before they were people. The mark is the animal; the game's people are in
+the screenshots below it.
 
 `media/settler.png` — the old hero mark, the settler upscaled 5x and
 re-thresholded as a mask — is gone; the favicons are separate renders and did

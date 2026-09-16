@@ -362,37 +362,16 @@
 
   /* The mammoth — assets/mammoth.png, the game's own animal, placed as an
      image rather than masked: the tusk is bone against the hide, and a mask
-     would flatten both to one colour. Two units stand with it, at 0.27 of its
-     height — a person is small beside a mammoth, and that scale is the whole
-     sentence the mark has to say. One stands clear of the tusk, one under the
-     trunk; both face right, toward the animal. The pocket under the trunk is
-     measured off the alpha: between 0.13 and 0.30 of the width the ink stops
-     at 0.69 of the height, so a unit whose head is at 0.73 stands under it
-     without touching. Every offset is a fraction of --mh so one number resizes
-     the whole group. */
-  .herd {
-    --mh: 200px;                         /* the mammoth's drawn height */
-    --mw: calc(var(--mh) * 1.698);       /* its width, from the file's 1912x1126 */
-    --uh: calc(var(--mh) * .27);         /* a unit's height */
-    --uw: calc(var(--uh) * .936);        /* its width, from the file's 88x94 */
-    --slot: calc(var(--uw) + var(--mh) * .09);
-    position: relative;
-    width: calc(var(--slot) + var(--mw));
-    height: var(--mh);
+     would flatten both to one colour. Alone — two units once stood beside it
+     for scale, and at 0.27 of its height they were two dark flecks under the
+     wordmark that read as noise before they read as people. Height, not width:
+     the file is 1912x1126, so the width follows. */
+  .mammoth {
+    display: block;
+    height: 200px; width: auto;
     margin: 0 auto 14px;
-  }
-  .herd img {
-    position: absolute; bottom: 0;
-    width: auto;
     filter: drop-shadow(4px 5px 0 rgba(59,28,23,.26));
   }
-  .herd .mammoth { right: 0; height: var(--mh); }
-  .herd .unit {
-    height: var(--uh);
-    filter: drop-shadow(2px 2px 0 rgba(59,28,23,.26));
-  }
-  .herd .unit-settler { left: 0; }
-  .herd .unit-warrior { left: calc(var(--slot) + var(--mw) * .16); }
   /* "Mammoth" is 6.82 ems wide in lingming — the wider of the two
      display faces (sable measures 6.07, but carries size-adjust: 110%, so it
      lands at 6.67). At the old 230px cap, written for the five letters of the
@@ -794,7 +773,7 @@
     .cta-row .btn { width: 100%; }
     .servers { grid-template-columns: 1fr; gap: 18px; }
     .servers .btn { --name-size: 30px; }
-    .herd { --mh: 140px; }
+    .mammoth { height: 140px; }
     .tub { --wordmark-h: 110px; }
   }
   @media (max-width: 420px) {
