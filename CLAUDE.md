@@ -235,8 +235,8 @@ wordmark's box height. The main site now carries the same relationship, both the
 `.tub .name` must keep the PNG's 1.885:1 aspect. Any other ratio letterboxes
 inside `contain` and slides the words off the piece.
 
-The tab icon is that same settler, transparent — this site's own mark, where
-`../main-site` and `../contact` use the house puzzle piece.
+The tab icon is the settler (`assets/unit1.png`), transparent — this site's
+own mark, where `../main-site` and `../contact` use the house puzzle piece.
 
 **It is not the site's maroon.** A transparent icon sits on whatever the tab
 strip happens to be, and `#581b1f` measures 13:1 against white chrome but
@@ -252,10 +252,30 @@ transparency there and composites on black.
 The `?v=` on every icon link is not decoration: browsers hold a favicon well
 past a hard reload, so a change without it looks like it did nothing.
 
-`media/settler.png` is `assets/unit1.png` — the base agent, and the silhouette
-the house mark is drawn from. The source is only **88x94**, so it is upscaled 5x
-with its alpha re-thresholded to keep a hard edge. It holds at the hero's 132px
-and should not be pushed much past that until there is a bigger original.
+## The hero mark
+
+`media/mammoth.png` is `assets/mammoth.png`, the game's own animal, downscaled
+from 1912 wide to 960 — the hero draws it at 340, so a retina screen still has
+headroom and the file is a quarter of the original's 767 KB. It is placed as an
+`<img>`, not masked: the tusk is bone against the hide, and a mask would
+flatten both to one colour. The same file, inset on a 512 square, is the game's
+cover in `../main-site/covers/games/mammoth.png`.
+
+Two units stand with it — `media/unit-settler.png` and `media/unit-warrior.png`
+are `assets/unit1.png` and `assets/warrior.png` untouched, at 88x94. They are
+drawn at 0.27 of the mammoth's height: a person is small beside a mammoth, and
+that scale is the whole sentence the mark has to say. One stands clear of the
+tusk and one under the trunk, both facing the animal.
+
+The pocket under the trunk is measured off the alpha, not eyeballed: between
+0.13 and 0.30 of the width the mammoth's ink stops at 0.69 of its height, so a
+unit whose head is at 0.73 stands under it without touching. Every offset in
+`.herd` is a fraction of `--mh`, so the phone breakpoint resizes the whole group
+with one number. Re-measure if the mammoth is redrawn.
+
+`media/settler.png` — the old hero mark, the settler upscaled 5x and
+re-thresholded as a mask — is gone; the favicons are separate renders and did
+not depend on it.
 
 ## Language
 

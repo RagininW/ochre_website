@@ -77,7 +77,11 @@ function hero() {
   return `
     <section class="hero" id="top">
       <div class="wrap">
-        <div class="settler" aria-hidden="true"></div>
+        <div class="herd" aria-hidden="true">
+          <img class="unit unit-settler" src="media/unit-settler.png" alt="">
+          <img class="mammoth" src="media/mammoth.png" alt="">
+          <img class="unit unit-warrior" src="media/unit-warrior.png" alt="">
+        </div>
         <h1 class="wordmark">Mammoth</h1>
         <p class="tagline">${esc(c.hero.tagline)}</p>
         <div class="cta-row">
