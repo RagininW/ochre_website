@@ -333,6 +333,14 @@
     text-shadow: 0 2px 0 rgba(0,0,0,.55);
   }
   .brand .dot { color: var(--lime); }
+  /* The mammoth beside the name, at the type's own size — 1.3em tall so the
+     animal's back clears the cap height, and the same file the hero draws at
+     300px, since a second crop is a second thing to keep in step. */
+  .brand { display: inline-flex; align-items: center; gap: .32em; }
+  .brand img {
+    height: 1.3em; width: auto;
+    filter: drop-shadow(0 2px 0 rgba(0,0,0,.55));
+  }
 
   .lang {
     display: flex; align-items: center;
@@ -365,11 +373,17 @@
      would flatten both to one colour. Alone — two units once stood beside it
      for scale, and at 0.27 of its height they were two dark flecks under the
      wordmark that read as noise before they read as people. Height, not width:
-     the file is 1912x1126, so the width follows. */
+     the file is 1912x1126, so the width follows.
+
+     The wordmark stands in front of its legs: the animal's belly line is at
+     about 0.62 of its height (measured off the alpha), so the title is pulled
+     up by --overlap and painted after it. Both are fractions of --mh so the
+     phone breakpoint moves the pair with one number. */
+  .hero { --mh: 300px; --overlap: calc(var(--mh) * .40); }
   .mammoth {
     display: block;
-    height: 200px; width: auto;
-    margin: 0 auto 14px;
+    height: var(--mh); width: auto;
+    margin: 0 auto;
     filter: drop-shadow(4px 5px 0 rgba(59,28,23,.26));
   }
   /* "Mammoth" is 6.82 ems wide in lingming — the wider of the two
@@ -393,8 +407,9 @@
     letter-spacing: .01em;
     white-space: nowrap;
     text-transform: none;
-    margin: 0;
-    color: var(--capsule);
+    position: relative;
+    margin: calc(-1 * var(--overlap)) 0 0;
+    color: var(--oxide);
     /* The same 3px ink outline every plate on the page wears. A text stroke is
        centred on the glyph edge, so `paint-order: stroke fill` lays the fill
        over its inner half and what shows is the outer half: 0.036em is ~6px at
@@ -780,7 +795,7 @@
     .cta-row .btn { width: 100%; }
     .servers { grid-template-columns: 1fr; gap: 18px; }
     .servers .btn { --name-size: 30px; }
-    .mammoth { height: 140px; }
+    .hero { --mh: 210px; }
     .tub { --wordmark-h: 110px; }
   }
   @media (max-width: 420px) {

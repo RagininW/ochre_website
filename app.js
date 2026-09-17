@@ -58,7 +58,7 @@ function topbar() {
   return `
     <header class="topbar">
       <div class="wrap">
-        <a class="brand" href="#top">Mammoth</a>
+        <a class="brand" href="#top"><img src="media/mammoth.png" alt="" aria-hidden="true">Mammoth</a>
         ${btn(LINKS.steam, LOGO.steam + esc(c.cta.steamShort), 'sm primary')}
         ${btn(LINKS.discord[LANG], LOGO.discord + esc(c.cta.discord), 'sm')}
         <div class="lang">
