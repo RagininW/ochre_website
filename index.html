@@ -114,6 +114,14 @@
     --lime-hi:    #eef171;   /* L .930 C .150 H 110 */
     --sienna:     #c24800;   /* L .560 C .180 H  50 — the loop */
     --oxide:      #b3241f;   /* L .500 C .180 H  28 — headings */
+    /* The wordmark stands on two grounds at once — the paper (L .83) and the
+       mammoth's hide (L .38, H 31) — so its colour is solved against both:
+       the OKLab point furthest from the nearer of the two, over the whole
+       sRGB gamut. That is oxide's own hue lifted to the lightness midway
+       between them and pushed to the gamut edge for chroma. Oxide itself
+       (L .50) sits almost on the hide's luminance, so across the legs it
+       was separated by chroma alone. Min ΔE .288 against .178. */
+    --wordmark:   #ea3d35;   /* L .620 C .210 H  28 — the title */
     --amber:      #f29c00;   /* L .760 C .170 H  72 — chips */
     --on-paper:   #421612;   /* L .270 C .070 H  28 */
     --muted:      #894b42;   /* L .485 C .085 H  30 — secondary on paper */
@@ -409,7 +417,7 @@
     text-transform: none;
     position: relative;
     margin: calc(-1 * var(--overlap)) 0 0;
-    color: var(--oxide);
+    color: var(--wordmark);
     /* The same 3px ink outline every plate on the page wears. A text stroke is
        centred on the glyph edge, so `paint-order: stroke fill` lays the fill
        over its inner half and what shows is the outer half: 0.036em is ~6px at
