@@ -391,12 +391,15 @@
      and shadow painted in. So the rule here is placement only. Width is a
      multiple of the mammoth's height so the two scale as one figure, capped
      at the wrap; the box is pulled up by --overlap so the lettering stands
-     across the legs. The <h1> stays for the reader and the crawler; its alt is
-     the word. Both files are 1400 wide, ~4.9:1. */
+     across the legs. 2.2 puts the lettering at ~135px tall against the 300px
+     animal — the proportion the set type had at its 166px cap (ink ~116px);
+     at 3.1 the drawn letters, chunkier than the face, were the hero. The
+     <h1> stays for the reader and the crawler; its alt is the word. Both
+     files are 1400 wide, ~4.9:1. */
   h1.wordmark {
     position: relative;
     margin: calc(-1 * var(--overlap)) auto 0;
-    width: min(calc(var(--mh) * 3.1), 100%);
+    width: min(calc(var(--mh) * 2.2), 100%);
   }
   h1.wordmark img { display: block; width: 100%; height: auto; }
 

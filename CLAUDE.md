@@ -280,7 +280,7 @@ picks the file off `LANG` inside an `<h1>` whose `alt` is the word, so the
 heading is still a heading to a reader and a crawler. Both are exported at
 1400 wide (~4.9:1) from the originals' ~1900.
 
-The CSS is placement only: the box is `3.1 x --mh` wide, capped at the wrap,
+The CSS is placement only: the box is `2.2 x --mh` wide, capped at the wrap,
 and pulled up by `--overlap` so the lettering stands across the mammoth's
 legs. Nothing about colour, stroke or font-size survives for it — a language
 added later needs a third file, not a rule.
