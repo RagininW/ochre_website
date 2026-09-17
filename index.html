@@ -114,14 +114,6 @@
     --lime-hi:    #eef171;   /* L .930 C .150 H 110 */
     --sienna:     #c24800;   /* L .560 C .180 H  50 — the loop */
     --oxide:      #b3241f;   /* L .500 C .180 H  28 — headings */
-    /* The wordmark stands on two grounds at once — the paper (L .83, H 93)
-       and the mammoth's hide (L .38, H 31). Raw sienna: the cave painter's
-       iron ochre, with its hue between the two grounds' rather than on
-       either, and the one candidate evenly separated from both (dE .24 to
-       each, 2.5:1 / 2.4:1). The OKLab optimum against both was a lifted
-       oxide (L .62 C .21 H 28, min dE .288), and it read as a red shouting
-       over the animal; this is chosen over it deliberately. */
-    --wordmark:   #b66c18;   /* L .600 C .130 H  62 — the title */
     --amber:      #f29c00;   /* L .760 C .170 H  72 — chips */
     --on-paper:   #421612;   /* L .270 C .070 H  28 */
     --muted:      #894b42;   /* L .485 C .085 H  30 — secondary on paper */
@@ -394,40 +386,19 @@
     margin: 0 auto;
     filter: drop-shadow(4px 5px 0 rgba(59,28,23,.26));
   }
-  /* "Mammoth" is 6.82 ems wide in lingming — the wider of the two
-     display faces (sable measures 6.07, but carries size-adjust: 110%, so it
-     lands at 6.67). At the old 230px cap, written for the five letters of the
-     previous name, it broke onto two lines and filled the hero.
-
-     So the size is derived rather than picked: the largest that still fits the
-     wrap on one line. `nowrap` then makes a mistake in that sum visible as an
-     overflow rather than silently re-wrapping. If the title changes again,
-     re-measure the em width — canvas `measureText` at a known size, remembering
-     that it does not apply CSS size-adjust. */
+  /* The title is drawn, not set — media/title.png, and title_es.png for
+     Spanish, each the word in that language's display face with the outline
+     and shadow painted in. So the rule here is placement only. Width is a
+     multiple of the mammoth's height so the two scale as one figure, capped
+     at the wrap; the box is pulled up by --overlap so the lettering stands
+     across the legs. The <h1> stays for the reader and the crawler; its alt is
+     the word. Both files are 1400 wide, ~4.9:1. */
   h1.wordmark {
-    font-family: var(--font-display);
-    font-weight: 400;
-    --wordmark-em: 6.83;
-    font-size: clamp(36px,
-      calc((min(100vw, var(--max)) - 2 * var(--gutter)) / var(--wordmark-em)),
-      166px);
-    line-height: 1.02;
-    letter-spacing: .01em;
-    white-space: nowrap;
-    text-transform: none;
     position: relative;
-    margin: calc(-1 * var(--overlap)) 0 0;
-    color: var(--wordmark);
-    /* The same 3px ink outline every plate on the page wears. A text stroke is
-       centred on the glyph edge, so `paint-order: stroke fill` lays the fill
-       over its inner half and what shows is the outer half: 0.036em is ~6px at
-       the 166px cap, 3px visible. In ems so it thins with the type on a phone
-       rather than eating the counters at 36px. The shadow was 0 5px; against
-       a hard black edge it read as a second outline, so it steps out to match. */
-    -webkit-text-stroke: .036em var(--ink);
-    paint-order: stroke fill;
-    text-shadow: 0 6px 0 rgba(59,28,23,.22);
+    margin: calc(-1 * var(--overlap)) auto 0;
+    width: min(calc(var(--mh) * 3.1), 100%);
   }
+  h1.wordmark img { display: block; width: 100%; height: auto; }
 
   .tagline {
     margin: 22px auto 0;

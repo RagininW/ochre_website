@@ -78,7 +78,7 @@ function hero() {
     <section class="hero" id="top">
       <div class="wrap">
         <img class="mammoth" src="media/mammoth.png" alt="" aria-hidden="true">
-        <h1 class="wordmark">Mammoth</h1>
+        <h1 class="wordmark"><img src="media/${LANG === 'es' ? 'title_es' : 'title'}.png" alt="Mammoth"></h1>
         <p class="tagline">${esc(c.hero.tagline)}</p>
         <div class="cta-row">
           ${btn(LINKS.steam, LOGO.steam + esc(c.cta.steam), 'big primary')}
